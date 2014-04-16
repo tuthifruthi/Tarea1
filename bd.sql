@@ -1,7 +1,7 @@
 CREATE TABLE Usuario (
 	rut VARCHAR(20) NOT NULL,
 	id_usuario NUMBER NOT NULL PRIMARY KEY, --nueva clave primaria y atributo nuevo
-	contraseña VARCHAR(20) NOT NULL,
+	contrasena VARCHAR(20) NOT NULL,
 	nombre VARCHAR(20) NOT NULL,
 	nombre_usuario VARCHAR(20) NOT NULL,
 	tipo VARCHAR(20) NOT NULL,
