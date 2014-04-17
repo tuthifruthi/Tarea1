@@ -102,6 +102,43 @@ public class verificaciones {
     }
     
     //FUNCIONES DE CARGA DE COSAS
+    public boolean CargarUser(String usuario, String passw) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT nombre_usuario FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+usuario+"'AND contrasena='"+passw+"'");
+        
+        if(set.next())
+                return true;
+         return false;
+    }
+    
+     public int CargarID(String nombreuser) throws Exception
+    {
+        int iduser=0;
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_usuario FROM TUTHIFRUTHI.USUARIO INTO iduser WHERE nombre_usuario='"+nombreuser+"'");
+        
+        if(set.next())
+                {
+                   return set.getInt(iduser); 
+                }
+         return 0;
+    }
+            
     public void CargarUsuario(usuario user, String nombreuser) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
@@ -118,7 +155,7 @@ public class verificaciones {
         {
             user.setUsername(set.getString("nombre_usuario"));
             user.setRut(set.getString("rut"));
-            user.setID(set.getString("id_usuario"));
+            user.setID(set.getInt("id_usuario"));
             user.setNombre(set.getString("nombre"));
             user.setComision(set.getInt("comision"));
         }
@@ -134,11 +171,33 @@ public class verificaciones {
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT nombre_usuario FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+usuario+"'");
+        ResultSet set=holi.executeQuery("SELECT tipo FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+usuario+"'");
         
         while(set.next())
         {
-            if(set.getString("nombre_usuario").equals("Administrador"))
+            if(set.getString("tipo").equals("Administrador"))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
+    
+    public boolean UserEsVendedor(String usuario) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT tipo FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+usuario+"'");
+        
+        while(set.next())
+        {
+            if(set.getString("tipo").equals("Vendedor"))
                 return true;
             else
                 return false;
@@ -185,8 +244,6 @@ public class verificaciones {
             customer.setNombre(set.getString("nombre"));
         }
     }
-    
-
     
     public void CargarCompras(compra comprap, int idcompra) throws Exception
     {
