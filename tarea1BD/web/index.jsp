@@ -35,8 +35,21 @@
 	</style>
   </head>
 
-  <body class="home">
-
+  <body class="home" onLoad=redireccionar()">
+    <%@page import="java.sql.*" %>
+    
+    <!-- FORMULARIO INICIO SESION -->
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
+    <jsp:useBean id="logueado" scope="application" class="holi.Login" />
+    <jsp.setProperty name="login" property="*" />
+    
+    <!-- FORMULARIO REGISTRO -->
+    <jsp:useBean id="registro" scope="page" class="holi.FormularioReg" />
+    <jsp.setProperty name="registro" property="*" />
+    
+    <!-- VALIDAR DATOS INGRESADOS -->
+    <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
+    
 	<!-- Barra de navegación -->
     <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -46,9 +59,11 @@
 				
 				<!-- Formulario -->
 				<form class="navbar-form pull-right">
-					<input type="text" class="input-medium" placeholder="Nombre de usuario">
-					<input type="password" class="input-medium" placeholder="Contraseña">
-					<button type="submit" class="btn">Entrar</button>
+					<input type="text" name="username" class="input-medium" placeholder="Nombre de usuario">
+					<input type="password" name="password" class="input-medium" placeholder="Contrasena">
+					
+                                        <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
+                                        <button type="submit" class="btn">Entrar</button>
 				</form>
 			</div> <!-- /container -->
 		</div> <!-- /navbar-inner -->
@@ -71,7 +86,7 @@
 						<div class="control-group">
 							<label class="control-label" for="nombres">Nombre</label>
 							<div class="controls">
-								<input type="text" class="input-xlarge" name="nombres" id="nombres" />
+								<input type="text" class="input-xlarge" name="nombre" id="nombres" />
 							</div>
 						</div>
 						
@@ -98,7 +113,7 @@
 						
 						<!-- Contraseña -->
 						<div class="control-group">
-							<label class="control-label" for="password">Contraseña</label>
+							<label class="control-label" for="password">Contrasena</label>
 							<div class="controls">
 								<input type="text" class="input-xlarge" name="password" id="password" />
 							</div>
@@ -106,11 +121,12 @@
 						
 						<!-- Repite contraseña -->
 						<div class="control-group">
-							<label class="control-label" for="rpassword">Repite contraseña</label>
+							<label class="control-label" for="rpassword">Repite contrasena</label>
 							<div class="controls">
 								<input type="text" class="input-xlarge" name="rpassword" id="rpassword" />
 							</div>
 						</div>
+                                                <input type="hidden" name="RegistroEnviado" id="RegistroEnviado" value="1" />
 					</fieldset>
 				
 			</div>
@@ -130,7 +146,45 @@
 			</div> <!-- /hero-unit -->
 	    </div> <!-- /container -->
 	</header>
+   
+   <% if (login.getLoginEnv()==1) { %> <!-- Si el usuario se logueo...-->
+   <article class="after-form">
+       <div class="container">
+           <% if(verificacion.CargarUser(login.getUsername(),login.getPassword())) { %> <!-- Si el usuario existe dentro del sistema...-->
+             <% if(verificacion.UserEsAdmin(login.getUsername())) { %> <!-- Si el usuario es admin...-->
+                <%
+                 logueado.setUsername(login.getUsername());
+                 logueado.setID(verificacion.CargarID(login.getUsername()));
+                 %>
+                 <jsp:forward page="admin.jsp" />
+                 
+             <% } else { %> <!-- Si no, es vendedor...-->
+             <%
+                 logueado.setUsername(login.getUsername());
+                 logueado.setID(verificacion.CargarID(logueado.getUsername()));
+             %>
+             
+             <jsp:forward page="vendedor.jsp" />
+                 
+           <% } %>
+           <% } else { %>
+       
+       <p> El nombre de usuario y/o la contraseña son incorrectos </p>
+       
+       <%{ %>
+       
+       <% if(registro.getRegEnviado() ==1) {%>  <!-- Si el usuario se ha registrado...-->
+       <article class="after-form">
+           <div class="container">
     
+               
+               
+               
+    <!-- AQUI QUEDE...-->           
+               
+               
+               
+               
     <!-- Footer -->
     <footer>
     	<div class="container">
