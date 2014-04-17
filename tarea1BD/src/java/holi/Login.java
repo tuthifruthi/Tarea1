@@ -13,7 +13,7 @@ package holi;
 public class Login {
     private String username;
     private String password;
-    private String id;
+    private int id;
     private int LoginEnviado;
     
     
@@ -21,19 +21,19 @@ public class Login {
     {
         username=null;
         password=null;
-        id=null;
+        id=0;
         LoginEnviado=0;
     }
     
     
     public String getUsername(){return username;}
     public String getPassword(){return password;}
-    public String getID(){return id;}
+    public int getID(){return id;}
     public int getLoginEnv(){return LoginEnviado;}
     
     public void setUsername(String username){this.username=username;}
     public void setPassword(String password){this.password=password;}
-    public void setID(String id){this.id=id;}
+    public void setID(int id){this.id=id;}
     public void setLoginEnv(int LoginEnviado){this.LoginEnviado=LoginEnviado;}
     
 }

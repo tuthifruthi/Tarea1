@@ -14,7 +14,7 @@ public class usuario {
     
     private String nombre_usuario;
     private String nombre;
-    private String id_usuario;
+    private int id_usuario;
     private String rut;
     private int comision;
     
@@ -22,7 +22,7 @@ public class usuario {
     {
         nombre_usuario=null;
         nombre=null;
-        id_usuario=null;
+        id_usuario=0;
         rut=null;
         comision=0;
         
@@ -30,14 +30,14 @@ public class usuario {
     
     public String getUsername() {return nombre_usuario;}
     public String getNombre() {return nombre;}
-    public String getID() {return id_usuario;}
+    public int getID() {return id_usuario;}
     public String getRut() {return rut;}
     public int getComision() {return comision;}
 
     public void setUsername(String nombre_usuario){this.nombre_usuario=nombre_usuario;}
     public void setNombre(String nombre){this.nombre=nombre;}
     public void setRut(String rut){this.rut=rut;}
-    public void setID(String id_usuario){this.id_usuario=id_usuario;}
+    public void setID(int id_usuario){this.id_usuario=id_usuario;}
     public void setComision(int comision){this.comision=comision;}
     
 }
