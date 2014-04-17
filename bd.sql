@@ -127,6 +127,24 @@ CREATE TRIGGER Ingresar_Cliente
       END CASE
     END
 	
+CREATE TRIGGER Cliente_repetido
+    BEFORE INSERT ON Cliente FOR EACH ROW
+    DECLARE
+    coincidencias NUMBER
+  
+   BEGIN
+   coincidencias:=0
+   
+   SELECT COUNT(*) INTO coincidencias FROM Cliente WHERE Cliente.rut=:new.rut
+   CASE
+   WHEN coincidencias >=1 THEN
+      raise_application_error(-20001, 'El cliente ingresado ya existe!.')
+   ELSE
+     SELECT secuencia.nextval INTO new.id_cliente FROM Dual
+   END CASE
+
+END
+
 CREATE TRIGGER trigger_Compras 
     BEFORE INSERT ON Producto FOR EACH ROW 
     DECLARE
