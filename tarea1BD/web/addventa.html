@@ -25,6 +25,52 @@
             new verificaciones().cargarUsuario(user,logueado.getNombre());
     %>
 
+   <article class="container">
+		<header>
+			<h1>Ingresar Venta</h1>
+	  </header>
+	
+		<!-- Formulario -->
+		<form class="form-horizontal">
+			<div class="modal-body">
+
+				<fieldset>
+					<!-- ID Producto -->
+					<div class="control-group">
+						<label class="control-label" for="idproducto">ID Producto</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" name="idproducto" id="rut" />
+						</div>
+					</div>
+
+					<hr />
+
+					<!-- Cliente -->
+					<div class="control-group">
+						<label class="control-label" for="cliente">Cliente</label>
+						
+					</div>
+
+					<hr />
+
+					<!-- Cantidad -->
+					<div class="control-group">
+						<label class="control-label" for="cantidad">Cantidad</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" name="cantidad" id="cantidad" />
+						</div>
+					</div>
+
+					<hr />
+
+				</fieldset>  
+
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">Finalizar</button>
+			</div>
+		</form>
+		
 	<!-- Barra de navegación -->
     <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -45,9 +91,9 @@
 							<li class="nav-header">Administrador</li>
 							<li><a href="addvendedor.html">Ingresar vendedor</a></li>
 							<li><a href="addcliente.html">Ingresar cliente</a></li>
-							<li><a href="adminprod.html">Administrar productos</a></li>
-							<li><a href="addcompra.html">Ingresar compra</a></li>
-							<li><a href="addventa.html">Ingresar venta</a></li>
+							<li><a href="adminprod.html">Administrar productos</b></a></li>
+							<li><a href="addcompra.html">Ingresar compra</b></a></li>
+							<li><a href="addventa.html"><b>Ingresar venta<b></a></li>
 							<li><a href="showsales.html">Ver ventas a cliente</a></li>
 							<li class="divider"></li>
 							<li><a href="#">Salir</a></li>

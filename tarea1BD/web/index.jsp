@@ -43,10 +43,6 @@
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp.setProperty name="login" property="*" />
     
-    <!-- FORMULARIO REGISTRO -->
-    <jsp:useBean id="registro" scope="page" class="holi.FormularioReg" />
-    <jsp.setProperty name="registro" property="*" />
-    
     <!-- VALIDAR DATOS INGRESADOS -->
     <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
     
@@ -69,80 +65,12 @@
 		</div> <!-- /navbar-inner -->
     </div> <!-- /navbar -->
 	
-	<!-- Ventana modular -->
-	<div class="modal hide fade" id="modal-register">
-		<div class="modal-header">
-			<a class="close" data-dismiss="modal">×</a>
-			<h3>Formulario de registro</h3>
-		</div>
-		
-		<!-- Formulario de registro -->
-		<form class="form-horizontal">
-			<div class="modal-body">
-				
-					<!-- Datos personales -->
-					<fieldset>
-						<!-- Nombres -->
-						<div class="control-group">
-							<label class="control-label" for="nombres">Nombre</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" name="nombre" id="nombres" />
-							</div>
-						</div>
-						
-						<!-- Fecha de nacimiento -->
-						<div class="control-group">
-							<label class="control-label" for="nacimiento">RUT</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" name="rut" id="rut" />
-								<p class="help-block">Ejemplo: 17671428k</p>
-							</div>
-						</div>
-					</fieldset>
-					<hr />
-					
-					<!-- Datos de la cuenta -->
-					<fieldset>
-						<!-- Nombre de usuario -->
-						<div class="control-group">
-							<label class="control-label" for="username">Nombre de usuario</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" name="username" id="username" />
-							</div>
-						</div>
-						
-						<!-- Contraseña -->
-						<div class="control-group">
-							<label class="control-label" for="password">Contrasena</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" name="password" id="password" />
-							</div>
-						</div>
-						
-						<!-- Repite contraseña -->
-						<div class="control-group">
-							<label class="control-label" for="rpassword">Repite contrasena</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" name="rpassword" id="rpassword" />
-							</div>
-						</div>
-                                                <input type="hidden" name="RegistroEnviado" id="RegistroEnviado" value="1" />
-					</fieldset>
-				
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary">Registrarse</button>
-			</div>
-		</form>
-	</div> <!-- /modal-register -->
-	
 	<!-- Header -->
 	<header>
 	    <div class="container">
 		    <div class="hero-unit">
 				    <h1>Bienvenido a Pepe's Work!</h1>
 				    <p>Sistema de ingreso de ventas e inventario.</p>
-				    <p><a class="btn btn-green btn-large" style="width:250px;" data-toggle="modal" href="#modal-register">Registrarse en el sistema</a></p>
 			</div> <!-- /hero-unit -->
 	    </div> <!-- /container -->
 	</header>
@@ -172,18 +100,7 @@
        <p> El nombre de usuario y/o la contraseña son incorrectos </p>
        
        <%{ %>
-       
-       <% if(registro.getRegEnviado() ==1) {%>  <!-- Si el usuario se ha registrado...-->
-       <article class="after-form">
-           <div class="container">
-    
-               
-               
-               
-    <!-- AQUI QUEDE...-->           
-               
-               
-               
+      
                
     <!-- Footer -->
     <footer>
