@@ -75,6 +75,26 @@ public class verificaciones {
             return true;
    }
 
+   public boolean IDProdExiste(int idprod) throws Exception
+   {
+       	String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_producto FROM TUTHIFRUTHI.PRODUCTO WHERE id_producto='"+idprod+"'");
+        
+        int contador=0; //para contar las coincidencias encontradas
+        while(set.next()) //si hay usuarios repetidos, los cuenta
+            contador++;
+        if(contador==0)
+            return false;
+        else
+            return true;
+   }
 
     //COMPRUEBA SI EL NICK INGRESADO NO HA SIDO UTILIZADO
     public boolean NickUsado(String nombreuser) throws Exception
@@ -312,7 +332,7 @@ public class verificaciones {
     
     //FUNCIONES DE INGRESO DE COSAS
     
-    public boolean IngresarCompra(int idcompra, int monto, String fech, String hour) throws Exception
+    public boolean IngresarDetalleCompra(int idprod, int cant, int costo) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
         String username="TUTHIFRUTHI";
@@ -322,11 +342,38 @@ public class verificaciones {
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         String query;
-        query="INSERT INTO TUTHIFRUTHI.COMPRA (id_compra,monto_total,fecha,hora) VALUES ('"+idcompra+"','"+monto+"','"+fech+"','"+hour+"')";
-        
+        String query2;
+        query="INSERT INTO TUTHIFRUTHI.DETALLECOMPRA (id_producto,cantidad,precio) VALUES ('"+idprod+"','"+cant+"','"+precio+"')";
+   
         try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
-            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla usuario
+            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla detallecompra
+        }
+        catch(SQLException e)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public boolean IngresarCompra(int montototal)
+    {
+	
+		String date=CURDATE();
+	    String hour=CURTIME();
+		String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        String query;
+	    query="INSERT INTO TUTHIFRUTHI.COMPRA (monto_total,fecha,hora) VALUES ('"+montototal+"','"date"','"hour"')";
+		try{
+            Statement holi=c.createStatement(); //para ejecutar la consulta
+            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla compra
         }
         catch(SQLException e)
         {
