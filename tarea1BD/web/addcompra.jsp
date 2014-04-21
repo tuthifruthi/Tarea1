@@ -21,7 +21,7 @@
     <%@page import="holi.usuario"%>
     <jsp:useBean id="logueado" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
-    <jsp:useBean id="compras" scope="page" class="holi.compra" />
+    <jsp:useBean id="compras" scope="page" class="holi.detallecompra" />
     <jsp:setProperty name="compras" property="*" />
 	<%
             usuario user = new usuario();
@@ -60,9 +60,9 @@
 					
 					<!-- Precio -->
 					<div class="control-group">
-						<label class="control-label" for="monto_total">Precio</label>
+						<label class="control-label" for="precio">Precio</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" name="monto_total" id="monto_total" />
+							<input type="text" class="input-xlarge" name="precio" id="monto_total" />
 						</div>
 					</div>
 
@@ -79,40 +79,32 @@
 		<% if (logueado.getLoginEnv()==1) { %> <!-- Si el usuario ya ingreso todos los datos del formulario...-->
 	       <article class="after-form">
 	           <div class="container">
-				<% if (logueado.getNombre() == null || logueado.getPassword() == null || logueado.getRpassword() == null  || logueado.getRut() == null  || !(logueado.getPassword().equals(logueado.getRpassword())) || 
-			        !(verificacion.IngresarVendedor(vendedor.getRut(),vendedor.getPassword(),vendedor.getNombre(),vendedor.getUsername())) || !(verificacion.ValidarRut(vendedor.getRut())) || (verificacion.NickUsado(vendedor.getUsername())){ %>
+				<% if (compras.getIDProducto() == null || compras.getCantidad() == null || compras.getPrecio() == null  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio()) || !(verificacion.IDProdExiste(compras.getIDProducto()))){ %>
 
 			            <p>Por favor corregir información</p>
 
 			        <!-- Si no ingresó alguno de los datos del formulario... -->
 
-			            <% if (logueado.getNombre() == null) { %>
+			            <% if (compras.getIDProducto() == null) { %>
 
-			            <p class="text-small">Debes ingresar el nombre del vendedor<p>
+			            <p class="text-small">Debes ingresar el ID del producto<p>
 
-			            <% } if (logueado.getPassword() == null) { %>
+			            <% } if (compras.getCantidad() == null) { %>
 
-			                <p class="text-small">Debes ingresar una contraseña</p>
+			                <p class="text-small">Debes ingresar la cantidad requerida del producto.</p>
 
-			            <% } else if (logueado.getRpassword() == null) { %>
-			                <p class="text-small">Debes confirmar la contraseña</p>
+			            <% } if(compras.getPrecio() == null) { %>
 
-			            <% } else if (!logueado.getPassword().equals(logueado.getRpassword())) { %>
+			                <p class="text-small">Debes ingresar el costo del producto. </p>
 
-			                <p class="text-small">Las contraseñas ingresadas no coinciden</p>
+							<% } if(!(verificacion.IDProdExiste(compras.getIDProducto()))) { %>
 
-			            <% } if(logueado.getRut() == null) { %>
-
-			                <p class="text-small">Debes ingresar el RUT del vendedor</p>
-
-							<% } if(!(verificacion.ValidarRut(vendedor.getRut()))) { %>
-
-					            <p class="text-small">El RUT ingresado no es válido</p>
+					            <p class="text-small">El ID indicado no existe en el sistema.</p>
 
 			            <% } %>
 
 			        <% } else { %>
-							<p>El vendedor fue agregado correctamente al sistema.</p>
+							<p>La compra fue agregada exitosamente.</p>
 				    <% } %>
 				<% } %>
 			    </div>
