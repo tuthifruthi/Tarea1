@@ -1,0 +1,6 @@
+-CASO 3: Verificación de que exista vendedor, redireccionar a pág de ventas
+-CASO 4
+-CASO 5
+-CASO 6: Que ingrese más de un producto al sistema, que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora.
+-CASO 7: 
+-CASO 8:
