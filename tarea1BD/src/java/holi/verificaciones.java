@@ -519,7 +519,7 @@ public class verificaciones {
         return "";
     }
 
-//FUNCIONES DE CONTADORES
+//FUNCIONES DE CONTADORES, NO SE SI SEAN NECESARIAS TODAVÍA...
   public boolean CountProductos() throws Exception 
   {
     String db="jdbc:oracle:thin:@localhost:1521:XE";

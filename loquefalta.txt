@@ -1,3 +1,5 @@
+-CASO 1: Listoko
+-CASO 2: Listoko
 -CASO 3: Verificación de que exista vendedor, redireccionar a pág de ventas
 -CASO 4
 -CASO 5
