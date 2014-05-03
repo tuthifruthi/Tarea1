@@ -22,7 +22,10 @@
     <jsp:useBean id="logueado" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="clientes" scope="page" class="holi.cliente" />
-    <jsp:setProperty name="clientes" property="*" />
+     <jsp:setProperty name="clientes" property="*" />
+
+    <!-- VALIDAR DATOS INGRESADOS -->
+    <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
 
 	<%
             usuario user = new usuario();
@@ -71,6 +74,8 @@
 		       <article class="after-form">
 		           <div class="container">
 
+                  <% if (verificacion.CountVendedores()==true) { %> <!-- Si hay vendedores en el sistema...-->
+
 					 <% if (logueado.getNombre() == null || logueado.getRut() == null  || !(logueado.getPassword().equals(logueado.getRpassword())) || 
 				        (verificacion.ClienteRepetido(clientes.getRut()) || 
  !(verificacion.IngresarCliente(clientes.getRut(),clientes.getNombre()) { %>
@@ -95,8 +100,14 @@
 
 				        <% } else { %>
 								<p>El cliente fue agregado correctamente al sistema.</p>
-					    <% } %>
-					<% } %>
+					    <% } %> //cierre else
+					     <% } %> //cierre if verificaciones
+					<% } %> // cierre if count vendedores
+
+                       <% } else { %>
+                       <p>No existe ningún vendedor en el sistema. No se puede realizar el ingreso de cliente</p>
+                       <% } %>
+
 				    </div>
 				    </article> <!-- /información formulario registro -->
 				    <% } %>
