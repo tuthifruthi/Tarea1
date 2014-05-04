@@ -32,17 +32,26 @@
 		<header>
 			<h1>Ingresar Compra</h1>
 	  </header>
+
+
+
+	  <a data-toggle="modal" href="#add-prod"><p><img src="img/arrow-orange.png"> Agregar Productos</a></p>
 	
-		<!-- Formulario -->
-		<form class="form-horizontal">
-			<div class="modal-body">
+		<!-- Formulario para agregar productos a la compra-->
+		<div class="modal hide fade" id="add-prod">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Agregar productos</h3>
+      </div>
+      
+        <div class="modal-body">
 
 				<fieldset>
 					<!-- ID Producto -->
 					<div class="control-group">
 						<label class="control-label" for="idproducto">ID Producto</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" name="idproducto" id="rut" />
+							<input type="text" class="input-xlarge" name="id_producto" id="id_producto" />
 						</div>
 					</div>
 
@@ -62,23 +71,13 @@
 					<div class="control-group">
 						<label class="control-label" for="precio">Precio</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" name="precio" id="monto_total" />
+							<input type="text" class="input-xlarge" name="precio" id="precio" />
 						</div>
-					</div>
-
-					<hr />
-					<input type="hidden" name="LoginEnv" id="LoginEnv" value="1" />
-				</fieldset>  
-							
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary">Finalizar</button>
-			</div>
-		</form>
+            </div>
+          </fieldset>       
+        </div>
 		
 		<% if (logueado.getLoginEnv()==1) { %> <!-- Si el usuario ya ingreso todos los datos del formulario...-->
-	       <article class="after-form">
-	           <div class="container">
 				<% if (compras.getIDProducto() == null || compras.getCantidad() == null || compras.getPrecio() == null  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio()) || !(verificacion.IDProdExiste(compras.getIDProducto()))){ %>
 
 			            <p>Por favor corregir información</p>
@@ -107,9 +106,12 @@
 							<p>La compra fue agregada exitosamente.</p>
 				    <% } %>
 				<% } %>
-			    </div>
-			    </article> <!-- /información formulario registro -->
 			    <% } %>
+			    <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+    </div> <!-- /formulario agregar productos -->
+
 		
 		
 		
