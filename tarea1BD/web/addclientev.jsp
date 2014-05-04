@@ -63,6 +63,7 @@
 							
 			</div>
 			<div class="modal-footer">
+				<input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
 				<button type="submit" class="btn btn-primary">Finalizar</button>
 			</div>
 		</form>
