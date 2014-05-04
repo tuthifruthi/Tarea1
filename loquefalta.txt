@@ -2,8 +2,8 @@
 -CASO 2 (Ingreso Vendedores): Listoko
 -CASO 3 (Ingreso Cliente): Redireccionar a pág de ventas
 -CASO 4 (Agregar productos): Listoko
--CASO 5 (Editar productos): Falta buscador, lista prod existentes
--CASO 6 (Ingreso Compra): Que ingrese más de un producto al sistema, que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora.
+-CASO 5 (Editar productos): Falta buscador
+-CASO 6 (Ingreso Compra): Que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora.
 -CASO 7 (Ingreso Venta): 
 -CASO 8 (Ver ventas a cliente):
 
