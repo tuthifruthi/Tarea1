@@ -118,6 +118,30 @@ public class verificaciones {
             return true;
     }
 
+    public boolean EditProd(String descr, String cat, int precio, int idprod)
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        String query;
+        query="UPDATE TUTHIFRUTHI.PRODUCTO SET descripcion='"+descr+"', categoria='"+cat+"', precio='"+precio+"' WHERE id_producto='"+idprod+"'";
+        
+        try{
+            Statement holi=c.createStatement(); //para ejecutar la consulta
+            holi.execute(query); 
+        }
+        catch(SQLException e)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
     public boolean ClienteRepetido(String rutuser) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
@@ -297,6 +321,8 @@ public class verificaciones {
         
         Statement holi=c.createStatement();
         ResultSet set=holi.executeQuery("SELECT fecha, id_compra, monto_total, hora FROM TUTHIFRUTHI.COMPRA WHERE id_compra='"+idcompra+"'");
+
+
         
         if(set.next())
         {
@@ -519,7 +545,162 @@ public class verificaciones {
         return "";
     }
 
-//FUNCIONES DE CONTADORES, NO SE SI SEAN NECESARIAS TODAVÍA...
+//OBTENER DATOS DE TABLAS
+
+    public int IDProd() throws Exception
+    {
+       String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_producto FROM TUTHIFRUTHI.PRODUCTO");
+
+        while(set.next())
+        {
+            return set.getInt("id_producto");
+        }
+        return 0;
+    }
+
+    public String NombreProd() throws Exception
+    {      
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT nombrep FROM TUTHIFRUTHI.PRODUCTO");
+
+        while(set.next())
+        {
+            return set.getString("nombrep");
+        }
+        return "";
+        
+    }
+
+    public int IDProdporNombre(String nombr) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_producto FROM TUTHIFRUTHI.PRODUCTO WHERE nombrep='"+nombr+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("id_producto");
+        }
+        return 0;
+    }
+
+    public int CostoProdporNombre(String nombr) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT precio FROM TUTHIFRUTHI.PRODUCTO WHERE nombrep='"+nombr+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("precio");
+        }
+        return 0;
+    }
+
+    public int CantProdporNombre(String nombr) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT stock FROM TUTHIFRUTHI.PRODUCTO WHERE nombrep='"+nombr+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("stock");
+        }
+        return 0;
+    }
+
+    public String DescripcionProdporNombre(String nombr) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT descripcion FROM TUTHIFRUTHI.PRODUCTO WHERE nombrep='"+nombr+"'");
+        
+        while(set.next())
+        {
+            return set.getString("descripcion");
+        }
+        return "";
+    }
+
+    public String CatProdporNombre(String nombr) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT categoria FROM TUTHIFRUTHI.PRODUCTO WHERE nombrep='"+nombr+"'");
+        
+        while(set.next())
+        {
+            return set.getString("categoria");
+        }
+        return "";
+    }
+
+    public int StockProd() throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT stock FROM TUTHIFRUTHI.PRODUCTO");
+
+        while(set.next())
+        {
+            return set.getInt("stock");
+        }
+        return 0;
+    }
+
+//FUNCIONES DE CONTADORES
   public boolean CountProductos() throws Exception 
   {
     String db="jdbc:oracle:thin:@localhost:1521:XE";

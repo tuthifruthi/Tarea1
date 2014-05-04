@@ -30,13 +30,43 @@
 	<%
             usuario user = new usuario();
             new verificaciones().cargarUsuario(user,logueado.getNombre());
+
+            String [] id = verificacion.IDProd();
+            String [] names = verificacion.NombreProd();
+            String [] cant = verificacion.StockProd();
     %>
 
    <article class="container">
 		<header>
 			<h1>Administrar Productos</h1>
 	  </header>
-	
+	      <h3> Lista productos existentes </h3>
+        <table>
+          <tr>
+            <td><h3><strong>ID</strong></h3></td>
+            <td><h3><strong>Nombre</strong></h3></td>
+            <td><h3><strong>Cantidad</strong></h3></td>
+          </tr>
+ 
+         <tr>
+          <% for (int i = 0; i < id.length; i++) { %>
+                      <td><h3><%= id[i] %></h3></td>
+                    <% } %>
+         </tr>
+ 
+         <tr>
+            <% for (int i = 0; i < names.length; i++) { %>
+                      <td><h3><%= names[i] %></h3></td>
+                      <% } %>
+         </tr>
+ 
+         <tr>
+            <% for (int i = 0; i < cant.length; i++) { %>
+                      <td><h3><%= cant[i] %></h3></td>
+                      <% } %>
+         </tr>
+        </table>
+
         <a data-toggle="modal" href="#add-prod"><p><img src="img/arrow-orange.png"> Agregar Productos</a></p>
         <a data-toggle="modal" href="#edit-prod"><p><img src="img/arrow-orange.png"> Editar Productos</a></p>
 		<br></br>
@@ -161,11 +191,31 @@
         <div class="modal-body">
           
           <fieldset>
-            
+
+            <div class="control-group">
+              <label class="control-label" for="select">Seleccione un producto</label>
+              <div class="controls">
+                <select name="producto" id="producto">
+                    <% for (int i = 0; i < names.length; i++) { %>
+                      <option value="<%= names[i] %>"><%= names[i] %></option>
+                    <% } %>
+                    </select>
+              </div>
+            </div>
+
+            <% String nombreElegido=request.getParameter("producto");
+               String descr=verificacion.DescripcionProdporNombre(nombreElegido);
+               String cat=verificacion.CatProdporNombre(nombreElegido);
+               int costo=verificacion.CostoProdporNombre(nombreElegido);
+               int idprod=verificacion.IDProdporNombre(nombreElegido);
+               int cant=verificacion.CantProdporNombre(nombreElegido);
+
+            %>
+
             <div class="control-group">
               <label class="control-label" for="descripcion">Descripción</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="descripcion" id="descripcion" />
+                <input value="<%= descr %>" type="text" class="input-xlarge" name="descripcion" id="descripcion" />
               </div>
             </div>
             
@@ -173,21 +223,21 @@
             <div class="control-group">
               <label class="control-label" for="categoria">Categoría</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="categoria" id="categoria" />
+                <input value="<%= cat %>" type="text" class="input-xlarge" name="categoria" id="categoria" />
               </div>
             </div>
 
           <div class="control-group">
           <label class="control-label" for="precio">Precio</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="precio" id="precio" />
+                <input value="<%= costo %>" type="text" class="input-xlarge" name="precio" id="precio" />
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="id_producto">ID Producto</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="id_producto" id="id_producto" readonly="readonly" />
+                <input value="<%= idprod %>" type="text" class="input-xlarge" name="id_producto" id="id_producto" readonly="readonly" />
               </div>
             </div>
 
@@ -195,7 +245,7 @@
             <div class="control-group">
               <label class="control-label" for="nombrep">Nombre Producto</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="nombrep" id="nombrep" readonly="readonly"/>
+                <input value="<%= nombreElegido %>" type="text" class="input-xlarge" name="nombrep" id="nombrep" readonly="readonly"/>
               </div>
             </div>
             
@@ -203,7 +253,7 @@
             <div class="control-group">
               <label class="control-label" for="stock">Cantidad</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="stock" id="stock" readonly="readonly" />
+                <input value="<%= cant %>" type="text" class="input-xlarge" name="stock" id="stock" readonly="readonly" />
               </div>
             </div>
           
@@ -211,8 +261,39 @@
         </div>
 
         <div class="modal-footer">
+          <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
           <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </div>
+
+
+        <% if (producto.getDescripcion() == null || producto.getCat() == null  || producto.getPrecio() == null || 
+                (verificacion.ClienteRepetido(clientes.getRut()) || 
+ !(verificacion.EditProd(producto.getDescripcion(),producto.getCat(),producto.getPrecio(),producto.getID()) { %>
+
+                    <p>Por favor corregir información</p>
+
+                <!-- Si no ingresó alguno de los datos del formulario... -->
+
+                    <% if (producto.getDescripcion() == null) { %>
+
+                    <p class="text-small">Debes ingresar la descripción del producto<p>
+
+                    <% } if(producto.getCat() == null) { %>
+
+                        <p class="text-small">Debes ingresar la categoría del producto</p>
+
+                    <% } if(producto.getPrecio() == null) { %>
+
+                      <p class="text-small">Debes ingresar el precio del producto</p>
+
+                    <% } %>
+
+                <% } else { %>
+                <p>El producto fue modificado exitosamente.</p>
+              <% } %> //cierre else
+               <% } %> //cierre if verificaciones
+           <% } %>
+
     </div> <!-- /formulario editar productos -->
 
 
@@ -236,7 +317,7 @@
 							<li class="nav-header">Administrador</li>
 							<li><a href="addvendedor.html">Ingresar vendedor</a></li>
 							<li><a href="addcliente.html">Ingresar cliente</a></li>
-							<li><a href="adminprod.html">Administrar productos</a></li>
+							<li><a href="adminprod.html"><b>Administrar productos</b></a></li>
 							<li><a href="addcompra.html">Ingresar compra</a></li>
 							<li><a href="addventa.html">Ingresar venta</a></li>
 							<li><a href="showsales.html">Ver ventas a cliente</a></li>
