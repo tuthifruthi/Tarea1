@@ -23,6 +23,7 @@ CREATE TABLE Cliente (
 	id_cliente NUMBER NOT NULL PRIMARY KEY --nuevo atributo
 );
 
+CONSTRAINT Venta_fk_Usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario) ON DELETE CASCADE
 CONSTRAINT Venta_fk_Cliente FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente) ON DELETE CASCADE
 
 CREATE TABLE DetalleVenta (
