@@ -17,13 +17,13 @@ CREATE TABLE Venta (
 	hora TIMESTAMP NOT NULL
 );
 
-CONSTRAINT Venta_fk_Cliente FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente) ON DELETE CASCADE
-
 CREATE TABLE Cliente (
-	rut VARCHAR(20) NOT NULL PRIMARY KEY,
+	rut VARCHAR(20) NOT NULL ,
 	nombre VARCHAR(20) NOT NULL,
-	id_cliente NUMBER NOT NULL --nuevo atributo
+	id_cliente NUMBER NOT NULL PRIMARY KEY --nuevo atributo
 );
+
+CONSTRAINT Venta_fk_Cliente FOREIGN KEY (id_cliente) REFERENCES Cliente (id_cliente) ON DELETE CASCADE
 
 CREATE TABLE DetalleVenta (
 	id_detalle NUMBER NOT NULL PRIMARY KEY,
@@ -87,11 +87,11 @@ CREATE TRIGGER TablaCliente
 		SELECT secuencia.nextval INTO new.id_cliente FROM Dual
 	END
 
-CREATE TRIGGER TablaCompra
-	BEFORE INSERT ON Compra FOR EACH ROW
-	BEGIN
-	    SELECT secuencia.nextval INTO new.id_compra FROM DuaL
-	END
+  CREATE TRIGGER TablaVentas
+  BEFORE INSERT ON Venta FOR EACH ROW
+  BEGIN
+    SELECT secuencia.nextval INTO new.id_venta FROM Dual
+  END
 	
 CREATE TRIGGER Editar_Producto
     BEFORE UPDATE ON Producto FOR EACH ROW
