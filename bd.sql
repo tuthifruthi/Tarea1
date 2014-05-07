@@ -13,8 +13,7 @@ CREATE TABLE Venta (
 	id_cliente NUMBER NOT NULL,
 	id_usuario NUMBER NOT NULL,
 	monto_total NUMBER NOT NULL,
-	fecha TIMESTAMP NOT NULL,
-	hora TIMESTAMP NOT NULL
+	fechahora TIMESTAMP NOT NULL,
 );
 
 CREATE TABLE Cliente (
@@ -59,40 +58,51 @@ CONSTRAINT DetalleCompra_fk_Compra FOREIGN KEY (id_compra) REFERENCES Compra (id
 CREATE TABLE Compra (
 	id_compra NUMBER NOT NULL PRIMARY KEY,
 	monto_total NUMBER NOT NULL,
-	fecha DATE NOT NULL,
-	hora TIMESTAMP NOT NULL,
+	fecha TIMESTAMP NOT NULL,
 );
 CREATE SEQUENCE secuencia START WITH 1 INCREMENT BY 1 NOMAXVALUE;
 
 CREATE TRIGGER InsertarUsuarioNuevo
   BEFORE INSERT ON Usuario FOR EACH ROW
   DECLARE
-    coincidencias NUMBER
+    coincidencias NUMBER;
     
   BEGIN
      coincidencias:=0
      
-     SELECT COUNT(*) INTO coincidencias FROM Usuario WHERE Usuario.rut=:new.rut
+     SELECT COUNT(*) INTO coincidencias FROM Usuario WHERE Usuario.rut=:NEW.rut;
      CASE
      WHEN coincidencias >=1 THEN
-        raise_application_error(-20001, 'El RUT ingresado ya existe!.')
+        raise_application_error(-20001, 'El RUT ingresado ya existe!.');
      ELSE
-       SELECT secuencia.nextval INTO new.id_usuario FROM Dual
-     END CASE
+       SELECT secuencia.NEXTVAL INTO :NEW.id_usuario FROM Dual;
+     END CASE;
 
-  END
+  END;
 
 CREATE TRIGGER TablaCliente
 	BEFORE INSERT ON Cliente FOR EACH ROW
 	BEGIN
-		SELECT secuencia.nextval INTO new.id_cliente FROM Dual
-	END
+		SELECT secuencia.NEXTVAL INTO :NEW.id_cliente FROM Dual;
+	END;
 
   CREATE TRIGGER TablaVentas
   BEFORE INSERT ON Venta FOR EACH ROW
   BEGIN
-    SELECT secuencia.nextval INTO new.id_venta FROM Dual
-  END
+    SELECT secuencia.NEXTVAL INTO :NEW.id_venta FROM Dual;
+  END;
+
+  CREATE TRIGGER TablaCompra //Todos los productos ingresados en detallecompra tienen un id_compra único
+  BEFORE INSERT ON Compra FOR EACH ROW
+  BEGIN
+    SELECT secuencia.NEXTVAL INTO :NEW.id_compra FROM Dual;
+  END;
+
+  CREATE TRIGGER TablaDetalleCompra //Cada producto tiene un numero de item
+  BEFORE INSERT ON Detalle FOR EACH ROW
+  BEGIN
+    SELECT secuencia.NEXTVAL INTO :NEW.id_detalle FROM Dual;
+  END;
 	
 CREATE TRIGGER Editar_Producto
     BEFORE UPDATE ON Producto FOR EACH ROW
@@ -101,50 +111,51 @@ CREATE TRIGGER Editar_Producto
       cantidad2 NUMBER
     
     BEGIN
-      SELECT COUNT (*) INTO cantidad FROM Producto
-      SELECT COUNT (*) INTO cantidad2 FROM Usuario WHERE Usuario.tipo='Administrador'
+      SELECT COUNT (*) INTO cantidad FROM Producto;
+      SELECT COUNT (*) INTO cantidad2 FROM Usuario WHERE Usuario.tipo='Administrador';
 
       CASE
       WHEN cantidad =0 THEN 
       raise_application_error(-20001, 'No existe ningun producto')
-      END CASE
+      END CASE;
       CASE
       WHEN cantidad2 =0 THEN
-      raise_application_error(-20001, 'No existe ningun usuario administrador')
-      END CASE
+      raise_application_error(-20001, 'No existe ningun usuario administrador');
+      END CASE;
 
-    END
+    END;
 
-CREATE TRIGGER Ingresar_Cliente
-    BEFORE INSERT ON Cliente FOR EACH ROW
-    DECLARE
-      cantidad NUMBER
-    
-    BEGIN
-      SELECT COUNT (*) INTO cantidad FROM Usuario WHERE Usuario.tipo=:'Vendedor'
-      CASE
-      WHEN cantidad =0 THEN
-      raise_application_error(-20001, 'No existe ningun vendedor')
-      END CASE
-    END
+CREATE TRIGGER HoraFechaCompra
+BEFORE INSERT ON Compra FOR EACH ROW
+BEGIN
+:NEW.fechahora := CURRENT_DATE();
+END;
+
+
+CREATE TRIGGER HoraFechaVenta
+BEFORE INSERT ON Venta FOR EACH ROW
+BEGIN
+:NEW.fechahora := CURRENT_DATE();
+END;
+
 	
 CREATE TRIGGER Cliente_repetido
     BEFORE INSERT ON Cliente FOR EACH ROW
     DECLARE
-    coincidencias NUMBER
+    coincidencias NUMBER;
   
    BEGIN
-   coincidencias:=0
+   coincidencias:=0;
    
-   SELECT COUNT(*) INTO coincidencias FROM Cliente WHERE Cliente.rut=:new.rut
+   SELECT COUNT(*) INTO coincidencias FROM Cliente WHERE Cliente.rut=:NEW.rut;
    CASE
    WHEN coincidencias >=1 THEN
-      raise_application_error(-20001, 'El cliente ingresado ya existe!.')
+      raise_application_error(-20001, 'El cliente ingresado ya existe!.');
    ELSE
-     SELECT secuencia.nextval INTO new.id_cliente FROM Dual
-   END CASE
+     SELECT secuencia.NEXTVAL INTO :NEW.id_cliente FROM Dual;
+   END CASE;
 
-END
+END;
 
 CREATE TRIGGER trigger_Compras 
     BEFORE INSERT ON Producto FOR EACH ROW 
