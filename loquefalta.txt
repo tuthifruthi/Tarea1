@@ -1,6 +1,6 @@
 -CASO 1 (Inicio sesión): Listoko
 -CASO 2 (Ingreso Vendedores): Listoko
--CASO 3 (Ingreso Cliente): Redireccionar a pág de ventas
+-CASO 3 (Ingreso Cliente): Listoko
 -CASO 4 (Agregar productos): Listoko
 -CASO 5 (Editar productos): Falta buscador
 -CASO 6 (Ingreso Compra): Que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora. 
@@ -10,3 +10,4 @@ Que en detalle compra el id sea único para todos los productos que formen parte
 -CASO 8 (Ver ventas a cliente):
 
 *** hay que probar todos los casos
+*** hay que arreglar trigger_compras y trigger_ventas. los crea con errores.

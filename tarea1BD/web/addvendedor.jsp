@@ -26,7 +26,7 @@
 
 	<%
             usuario user = new usuario();
-            new verificaciones().cargarUsuario(user,logueado.getNombre());
+            new verificaciones().cargarUsuario(user,logueado.getUsername());
     %>
 
    <article class="container">
@@ -151,7 +151,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getNombre() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

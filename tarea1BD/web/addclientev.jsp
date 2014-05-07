@@ -26,7 +26,7 @@
 
 	<%
             usuario user = new usuario();
-            new verificaciones().cargarUsuario(user,logueado.getNombre());
+            new verificaciones().cargarUsuario(user,logueado.getUsername());
     %>
 
 
@@ -96,6 +96,14 @@
 
 				        <% } else { %>
 								<p>El cliente fue agregado correctamente al sistema.</p>
+								<% if(verificacion.UserEsAdmin(user.getUsername())) { %> <!-- Si el usuario es admin...-->
+                 					<jsp:forward page="addventa.jsp" />
+                 
+             					<% } else { %> <!-- Si no, es vendedor...-->
+             
+             						<jsp:forward page="addventav.jsp" />
+                 
+           							<% } %>
 					    <% } %>
 					<% } %>
 				    </div>
@@ -115,7 +123,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getNombre() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

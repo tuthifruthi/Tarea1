@@ -82,14 +82,12 @@
              <% if(verificacion.UserEsAdmin(login.getUsername())) { %> <!-- Si el usuario es admin...-->
                 <%
                  logueado.setUsername(login.getUsername());
-                 logueado.setID(verificacion.CargarID(login.getUsername()));
                  %>
                  <jsp:forward page="admin.jsp" />
                  
              <% } else { %> <!-- Si no, es vendedor...-->
              <%
                  logueado.setUsername(login.getUsername());
-                 logueado.setID(verificacion.CargarID(logueado.getUsername()));
              %>
              
              <jsp:forward page="vendedor.jsp" />
