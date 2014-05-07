@@ -26,6 +26,12 @@
 	<%
             usuario user = new usuario();
             new verificaciones().cargarUsuario(user,logueado.getNombre());
+
+            int suma=0;
+            String [] id;
+            String [] cant;
+            String [] precio;
+
     %>
 
    <article class="container">
@@ -36,6 +42,46 @@
 
 
 	  <a data-toggle="modal" href="#add-prod"><p><img src="img/arrow-orange.png"> Agregar Productos</a></p>
+
+        <table>
+          <tr>
+            <td><h3><strong>ID</strong></h3></td>
+            <td><h3><strong>Cantidad</strong></h3></td>
+            <td><h3><strong>Precio</strong></h3></td>
+          </tr>
+ 
+         <tr>
+          <% for (int i = 0; i < id.length; i++) { %>
+                      <td><h3><%= id[i] %></h3></td>
+                    <% } %>
+         </tr>
+ 
+         <tr>
+            <% for (int i = 0; i < cant.length; i++) { %>
+                      <td><h3><%= cant[i] %></h3></td>
+                      <% } %>
+         </tr>
+ 
+         <tr>
+            <% for (int i = 0; i < precio.length; i++) { %>
+                      <td><h3><%= precio[i] %></h3></td>
+                      <% } %>
+         </tr>
+
+        </table>
+
+        <% for (int i = 0; i < precio.length; i++) { %>
+                  <% suma+=precio[i] %>
+            <% } %>
+
+        <table>
+        	<tr>
+            <tr>
+            <td><h3><strong>MONTO TOTAL</strong></h3></td>
+            <td><h3><strong><%= suma %></strong></h3></td>
+            </tr>
+        </table>
+
 	
 		<!-- Formulario para agregar productos a la compra-->
 		<div class="modal hide fade" id="add-prod">
@@ -76,8 +122,6 @@
             </div>
           </fieldset>       
         </div>
-		
-		<% if (logueado.getLoginEnv()==1) { %> <!-- Si el usuario ya ingreso todos los datos del formulario...-->
 				<% if (compras.getIDProducto() == null || compras.getCantidad() == null || compras.getPrecio() == null  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio()) || !(verificacion.IDProdExiste(compras.getIDProducto()))){ %>
 
 			            <p>Por favor corregir información</p>
@@ -109,17 +153,10 @@
 			    <% } %>
 			    <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Agregar</button>
+          //poner algo aca para refrescar la pagina addcompra.jsp cada vez que se agregue un nuevo producto
         </div>
     </div> <!-- /formulario agregar productos -->
 
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	<!-- Barra de navegación -->
     <div class="navbar navbar-fixed-top">

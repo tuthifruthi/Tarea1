@@ -3,7 +3,9 @@
 -CASO 3 (Ingreso Cliente): Redireccionar a pág de ventas
 -CASO 4 (Agregar productos): Listoko
 -CASO 5 (Editar productos): Falta buscador
--CASO 6 (Ingreso Compra): Que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora.
+-CASO 6 (Ingreso Compra): Que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora. 
+Que en detalle compra el id sea único para todos los productos que formen parte de la compra. Refrescar pagina addcompra por cada producto agregado para que la tabla se actualice.
+
 -CASO 7 (Ingreso Venta): 
 -CASO 8 (Ver ventas a cliente):
 
