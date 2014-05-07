@@ -164,7 +164,7 @@ public class verificaciones {
     }
     
     //FUNCIONES DE CARGA DE COSAS
-    public boolean CargarUser(String usuario, String passw) throws Exception
+    /* public boolean CargarUser(String usuario, String passw) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
         String username="TUTHIFRUTHI";
@@ -181,7 +181,7 @@ public class verificaciones {
          return false;
     }
     
-     public int CargarID(String nombreuser) throws Exception
+    public int CargarID(String nombreuser) throws Exception
     {
         int iduser=0;
         String db="jdbc:oracle:thin:@localhost:1521:XE";
@@ -199,7 +199,7 @@ public class verificaciones {
                    return set.getInt(iduser); 
                 }
          return 0;
-    }
+    } */
             
     public void CargarUsuario(usuario user, String nombreuser) throws Exception
     {
@@ -267,7 +267,7 @@ public class verificaciones {
         return false;
     }
     
-    public void CargarProductos(producto prod) throws Exception
+    /* public void CargarProductos(producto prod) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
         String username="TUTHIFRUTHI";
@@ -354,11 +354,11 @@ public class verificaciones {
             ventas.setHora(set.getString("hora"));
             ventas.setFecha(set.getString("fecha"));
         }
-    }
+    } */
     
     //FUNCIONES DE INGRESO DE COSAS
-    
-    public boolean IngresarDetalleCompra(int idprod, int cant, int costo) throws Exception
+
+    public boolean IDCompra() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
         String username="TUTHIFRUTHI";
@@ -369,7 +369,7 @@ public class verificaciones {
         
         String query;
         String query2;
-        query="INSERT INTO TUTHIFRUTHI.DETALLECOMPRA (id_producto,cantidad,precio) VALUES ('"+idprod+"','"+cant+"','"+precio+"')";
+        query="INSERT INTO TUTHIFRUTHI.COMPRA (monto_total) VALUES (0)";
    
         try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
@@ -383,11 +383,84 @@ public class verificaciones {
         return true;
     }
 
-    public boolean IngresarCompra(int montototal)
+    public boolean IDVenta() throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        String query;
+        String query2;
+        query="INSERT INTO TUTHIFRUTHI.VENTA (monto_total, id_usuario, id_cliente) VALUES (0,0,0)";
+   
+        try{
+            Statement holi=c.createStatement(); //para ejecutar la consulta
+            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla detallecompra
+        }
+        catch(SQLException e)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean IngresarDetalleCompra(int idprod, int cant, int costo, int idcompra) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        String query;
+        String query2;
+        query="INSERT INTO TUTHIFRUTHI.DETALLECOMPRA (id_producto,cantidad,precio,id_compra) VALUES ('"+idprod+"','"+cant+"','"+precio+"','"+idcompra+"')";
+   
+        try{
+            Statement holi=c.createStatement(); //para ejecutar la consulta
+            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla detallecompra
+        }
+        catch(SQLException e)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public boolean IngresarDetalleVenta(int idprod, int cant, int idventa) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        String query;
+        String query2;
+        query="INSERT INTO TUTHIFRUTHI.DETALLEVENTA (id_producto,cantidad,id_venta) VALUES ('"+idprod+"','"+cant+"','"+idventa+"')";
+   
+        try{
+            Statement holi=c.createStatement(); //para ejecutar la consulta
+            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla detallecompra
+        }
+        catch(SQLException e)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public boolean IngresarCompra(int montototal, int idcompra)
     {
 	
-		String date=CURDATE();
-	    String hour=CURTIME();
 		String db="jdbc:oracle:thin:@localhost:1521:XE";
         String username="TUTHIFRUTHI";
         String password="mariaj";
@@ -396,7 +469,7 @@ public class verificaciones {
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         String query;
-	    query="INSERT INTO TUTHIFRUTHI.COMPRA (monto_total,fecha,hora) VALUES ('"+montototal+"','"date"','"hour"')";
+        query="UPDATE TUTHIFRUTHI.COMPRA SET monto_total='"+montototal+"' WHERE id_compra='"+idcompra+"'";
 		try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
             holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla compra
@@ -433,7 +506,7 @@ public class verificaciones {
         return true;
     }
     
-    public boolean IngresarVenta(int idventa, int idcliente, int idusuario, int monto, String fech, String hour) throws Exception
+    public boolean IngresarVenta(int idventa, int idcliente, int idusuario, int monto) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
         String username="TUTHIFRUTHI";
@@ -443,11 +516,10 @@ public class verificaciones {
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         String query;
-        query="INSERT INTO TUTHIFRUTHI.VENTA (id_venta,id_usuario,id_cliente,monto_total,fecha,hora) VALUES ('"+idventa+"','"+idcliente+"','"+idusuario+"','"+monto+"','"+fech+"','"+hour+"')";
-        
+        query="UPDATE TUTHIFRUTHI.VENTA SET monto_total='"+monto+"',id_usuario='"+idusuario+"',id_cliente='"+idcliente+"' WHERE id_venta='"+idventa+"'";
         try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
-            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla usuario
+            holi.execute(query); //ejecuta la consulta de insertar usuario dentro de la tabla compra
         }
         catch(SQLException e)
         {
@@ -525,7 +597,141 @@ public class verificaciones {
         }        
         return 0;
     }
+
+    public int ObtenerIDCompra() throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_compra FROM TUTHIFRUTHI.COMPRA WHERE monto_total=0");
+        
+        while(set.next()) 
+        {
+            return set.getInt("id_compra");
+        }        
+        return 0;
+    }
+
+    public int ObtenerIDVenta() throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_venta FROM TUTHIFRUTHI.VENTA WHERE monto_total=0 AND id_cliente=0 AND id_usuario=0");
+        
+        while(set.next()) 
+        {
+            return set.getInt("id_venta");
+        }        
+        return 0;
+    }
+
     
+    public int IDInsertadoDetalleCompra(int idcompra) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_producto FROM TUTHIFRUTHI.DETALLECOMPRA WHERE id_compra='"+idcompra+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("id_producto");
+        }        
+        return 0;
+    }
+
+    public int IDInsertadoDetalleVenta(int idventa) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT id_producto FROM TUTHIFRUTHI.DETALLEVENTA WHERE id_venta='"+idventa+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("id_producto");
+        }        
+        return 0;
+    }
+
+    public int PrecioInsertadoDetalleCompra(int idcompra) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT precio FROM TUTHIFRUTHI.DETALLECOMPRA WHERE id_compra='"+idcompra+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("precio");
+        }        
+        return 0;
+    }
+
+    public int CantidadInsertadoDetalleCompra(int idcompra) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT cantidad FROM TUTHIFRUTHI.DETALLECOMPRA WHERE id_compra='"+idcompra+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("cantidad");
+        }        
+        return 0;
+    }
+
+    public int CantidadInsertadoDetalleVenta(int idventa) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT cantidad FROM TUTHIFRUTHI.DETALLEVENTA WHERE id_venta='"+idventa+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("cantidad");
+        }        
+        return 0;
+    }
+
     public String BuscarProdPorNombr(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
@@ -562,6 +768,64 @@ public class verificaciones {
         while(set.next())
         {
             return set.getInt("id_producto");
+        }
+        return 0;
+    }
+
+    public String FechaHoraCompra(int idcompra) throws Exception
+    {
+       String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT fechahora FROM TUTHIFRUTHI.COMPRA WHERE id_compra='"+idcompra+"'");
+
+        while(set.next())
+        {
+            return set.getString("fechahora");
+        }
+        return 0;
+    }
+
+    public String FechaHoraVenta(int idventa) throws Exception
+    {
+       String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT fechahora FROM TUTHIFRUTHI.VENTA WHERE id_compra='"+idcompra+"'");
+
+        while(set.next())
+        {
+            return set.getString("fechahora");
+        }
+        return 0;
+    }
+
+
+    public String FechaHoraVenta(int idcompra) throws Exception
+    {
+       String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT fechahora FROM TUTHIFRUTHI.VENTA WHERE id_compra='"+idcompra+"'");
+
+        while(set.next())
+        {
+            return set.getString("fechahora");
         }
         return 0;
     }
@@ -605,6 +869,25 @@ public class verificaciones {
         return 0;
     }
 
+        public int NombreProdporID(int idprod) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT nombrep FROM TUTHIFRUTHI.PRODUCTO WHERE id_producto='"+idprod+"'");
+        
+        while(set.next())
+        {
+            return set.getString("nombrep");
+        }
+        return 0;
+    }
+
     public int CostoProdporNombre(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
@@ -616,6 +899,25 @@ public class verificaciones {
         
         Statement holi=c.createStatement();
         ResultSet set=holi.executeQuery("SELECT precio FROM TUTHIFRUTHI.PRODUCTO WHERE nombrep='"+nombr+"'");
+        
+        while(set.next())
+        {
+            return set.getInt("precio");
+        }
+        return 0;
+    }
+
+    public int CostoProdporID(int id) throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT precio FROM TUTHIFRUTHI.PRODUCTO WHERE id_producto='"+id+"'");
         
         while(set.next())
         {
@@ -677,6 +979,25 @@ public class verificaciones {
         while(set.next())
         {
             return set.getString("categoria");
+        }
+        return "";
+    }
+
+    public String NombreClientes() throws Exception
+    {
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="TUTHIFRUTHI";
+        String password="mariaj";
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection c;
+        c=DriverManager.getConnection(db,username,password); //conexion a bd
+        
+        Statement holi=c.createStatement();
+        ResultSet set=holi.executeQuery("SELECT nombre FROM TUTHIFRUTHI.CLIENTE");
+        
+        while(set.next())
+        {
+            return set.getString("nombre");
         }
         return "";
     }

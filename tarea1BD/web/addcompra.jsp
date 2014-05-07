@@ -14,6 +14,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
   </head>
 
   <body class="profile">
@@ -22,15 +23,20 @@
     <jsp:useBean id="logueado" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="compras" scope="page" class="holi.detallecompra" />
+    <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
     <jsp:setProperty name="compras" property="*" />
 	<%
             usuario user = new usuario();
             new verificaciones().cargarUsuario(user,logueado.getUsername());
 
+            verificacion.IDCompra(); //inserta en tabla Compra dejando el monto total con valor cero
+            int idcompra=verificacion.ObtenerIDCompra(); //busca el ID Compra en donde el monto total es cero
+            String [] id=verificacion.IDInsertadoDetalleCompra(idcompra);
+            String [] names=null;
+            String [] cant=verificacion.CantidadInsertadoDetalleCompra(idcompra);
+            String [] precio=verificacion.PrecioInsertadoDetalleCompra(idcompra);
             int suma=0;
-            String [] id=;
-            String [] cant=;
-            String [] precio=;
+            String fechahoracompra=verificacion.FechaHoraCompra(idcompra);
 
     %>
 
@@ -39,18 +45,29 @@
 			<h1>Ingresar Compra</h1>
 	  </header>
 
-
-
+    <h3><strong>Código Compra: #<%= idcompra %></strong><h3>
+    <h3><strong>Fecha/Hora Compra: </strong> <%= fechahoracompra %><h3>
 	  <a data-toggle="modal" href="#add-prod"><p><img src="img/arrow-orange.png"> Agregar Productos</a></p>
-
-        <table>
+    
+        <table id="tabla1">
           <tr>
             <td><h3><strong>ID</strong></h3></td>
+            <td><h3><strong>Nombre Producto</strong></h3></td>
             <td><h3><strong>Cantidad</strong></h3></td>
             <td><h3><strong>Precio</strong></h3></td>
           </tr>
  
-         <tr>
+          <tr>
+          <% for (int i = 0; i < id.length; i++) { %>
+                  <% names[i]=verificacion.NombreProdporID(id[i]) %>
+            <% } %>
+
+          <% for (int i = 0; i < names.length; i++) { %>
+                      <td><h3><%= names[i] %></h3></td>
+                    <% } %>
+         </tr>
+
+          <tr>
           <% for (int i = 0; i < id.length; i++) { %>
                       <td><h3><%= id[i] %></h3></td>
                     <% } %>
@@ -69,18 +86,34 @@
          </tr>
 
         </table>
-
-        <% for (int i = 0; i < precio.length; i++) { %>
+        
+        <table id="tabla2">
+          <% for (int i = 0; i < precio.length; i++) { %>
                   <% suma+=precio[i] %>
             <% } %>
-
-        <table>
-        	<tr>
-            <tr>
+          <tr>
             <td><h3><strong>MONTO TOTAL</strong></h3></td>
             <td><h3><strong><%= suma %></strong></h3></td>
-            </tr>
+          </tr>
         </table>
+
+        <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
+        <button type="submit" class="btn">Finalizar</button>
+
+        <% if (logueado.getLoginEnv()==1) { %> <!-- Si fue presionado el botón Finalizar...-->
+        <article class="after-form">
+        <div class="container">
+
+           <% if(verificacion.IngresarCompra(suma, idcompra) { %> <!-- Si la compra se agregó exitosamente...-->
+
+             <p> La compra fue agregada exitosamente al sistema </p>
+                 
+           <% } else { %>
+       
+             <p> Error! </p>
+       
+           <%} %>
+       <%} %>
 
 	
 		<!-- Formulario para agregar productos a la compra-->
@@ -122,7 +155,7 @@
             </div>
           </fieldset>       
         </div>
-				<% if (compras.getIDProducto() == null || compras.getCantidad() == null || compras.getPrecio() == null  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio()) || !(verificacion.IDProdExiste(compras.getIDProducto()))){ %>
+				<% if (compras.getIDProducto() == null || compras.getCantidad() == null || compras.getPrecio() == null  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio(),idcompra) || !(verificacion.IDProdExiste(compras.getIDProducto()))){ %>
 
 			            <p>Por favor corregir información</p>
 

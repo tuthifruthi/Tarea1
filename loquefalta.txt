@@ -3,11 +3,12 @@
 -CASO 3 (Ingreso Cliente): Listoko
 -CASO 4 (Agregar productos): Listoko
 -CASO 5 (Editar productos): Falta buscador
--CASO 6 (Ingreso Compra): Que ingrese el monto total en la tabla Compra, que muestre por pantalla ID Producto, Nombre Producto, Precio, Monto venta, Fecha, Hora. 
-Que en detalle compra el id sea único para todos los productos que formen parte de la compra. Refrescar pagina addcompra por cada producto agregado para que la tabla se actualice.
+-CASO 6 (Ingreso Compra): Ver una forma de actualizar la tabla cada vez que se realice un cambio en ella
+-CASO 7 (Ingreso Venta): Recuperar nombre_cliente, RUT cliente, nombre vendedor, Rut vendedor, Completar funcion ingresar venta, recuperar id_cliente, id_usuario
 
--CASO 7 (Ingreso Venta): 
--CASO 8 (Ver ventas a cliente):
+-CASO 8 (Ver ventas a cliente y Mis ventas (para vendedor)):
 
 *** hay que probar todos los casos
-*** hay que arreglar trigger_compras y trigger_ventas. los crea con errores.
+*** hay que arreglar trigger_compras y trigger_ventas. los crea con errores. falta agregar a los trigger la actualizacion de la comision del vendedor
+*** funciones comentadas en verificaciones.java parece que no las usé para nada xD hay que verificar eso y borrarlas 
+*** me parece que para ingreso venta hay que poner como campo el rut del vendedor 

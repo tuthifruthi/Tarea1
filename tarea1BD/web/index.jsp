@@ -97,7 +97,7 @@
        
        <p> El nombre de usuario y/o la contraseña son incorrectos </p>
        
-       <%{ %>
+         <%} %>
       
                
     <!-- Footer -->

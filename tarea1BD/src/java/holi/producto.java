@@ -18,6 +18,7 @@ public class producto {
     private String descripcion;
     private String categoria;
     private int precio;
+    private int cantidad;
     
     public producto()
     {
@@ -27,6 +28,7 @@ public class producto {
         descripcion=null;
         precio=0;
         stock=0;
+        cantidad=0;
         
     }
     
@@ -36,10 +38,12 @@ public class producto {
     public String getCat() {return categoria;}
     public String getDescripcion() {return descripcion;}
     public int getPrecio() {return precio;}
+    public int getCantidad() {return cantidad;}
 
     public void setNombreProd(String nombrep){this.nombrep=nombrep;}
     public void setID(int id_producto){this.id_producto=id_producto;}
     public void setStock(int stock){this.stock=stock;}
+    public void setCantidad(int cantidad){this.cantidad=cantidad;}
     public void setPrecio(int precio){this.precio=precio;}
     public void setCat(String categoria){this.categoria=categoria;}
     public void setDescripcion(String descripcion){this.descripcion=descripcion;}
