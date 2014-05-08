@@ -19,7 +19,7 @@
   <body class="profile">
 	<%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="application" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
 	<%
@@ -48,6 +48,7 @@
             <% String nombreElegido=request.getParameter("clientes"); 
                int idcliente=verificacion.IDClienteporNombre(nombreElegido);
                String [] id=verificacion.IDProddeVentaCliente(idcliente);
+              
             %>
 
       <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />

@@ -27,6 +27,7 @@
 
 	<!-- asigno los datos a cada variable del objeto -->
 	<jsp:setProperty name="producto" property="*" />
+        
 	<%
             usuario user = new usuario();
             new verificaciones().cargarUsuario(user,logueado.getUsername());
@@ -131,9 +132,9 @@
             </div>
           </fieldset>       
         </div>
-					 <% if (producto.getNombreProd() == null || producto.getID() == null  || producto.getCat() == null || producto.getDescripcion() == null || producto.getStock() == null || producto.getPrecio() == null || 
+					 <% if (producto.getNombreProd() == null || producto.getID() == 0  || producto.getCat() == null || producto.getDescripcion() == null || producto.getStock() == 0 || producto.getPrecio() == 0 || 
 				        (verificacion.IDProdExiste(producto.getID()) || 
- !(verificacion.AgregarProd(producto.getID(),producto.getStock(),producto.getPrecio(),producto.getCat(), producto.getDescripcion(), producto.getNombreProd()) { %>
+ !(verificacion.AgregarProd(producto.getID(),producto.getStock(),producto.getPrecio(),producto.getCat(), producto.getDescripcion(), producto.getNombreProd())))) { %>
 
 				            <p>Por favor corregir información</p>
 
@@ -143,7 +144,7 @@
 
 				            <p class="text-small">Debes ingresar el nombre del producto<p>
 
-				            <% } if(producto.getID() == null) { %>
+				            <% } if(producto.getID() == 0) { %>
 
 				                <p class="text-small">Debes ingresar el ID del producto</p>
 
@@ -155,11 +156,11 @@
 
 				                <p class="text-small">Debes ingresar la descripción</p>
 
-				            <% } if(producto.getStock() == null) { %>
+				            <% } if(producto.getStock() == 0) { %>
 
 				                <p class="text-small">Debes ingresar el stock</p>
 
-				             <% } if(producto.getPrecio() == null) { %>
+				             <%  if(producto.getPrecio() == 0) { %>
 
 				                <p class="text-small">Debes ingresar el costo del producto</p>
 
@@ -208,7 +209,7 @@
                String cat=verificacion.CatProdporNombre(nombreElegido);
                int costo=verificacion.CostoProdporNombre(nombreElegido);
                int idprod=verificacion.IDProdporNombre(nombreElegido);
-               int cant=verificacion.CantProdporNombre(nombreElegido);
+               int cantidad=verificacion.CantProdporNombre(nombreElegido);
 
             %>
 
@@ -253,7 +254,7 @@
             <div class="control-group">
               <label class="control-label" for="stock">Cantidad</label>
               <div class="controls">
-                <input value="<%= cant %>" type="text" class="input-xlarge" name="stock" id="stock" readonly="readonly" />
+                <input value="<%= cantidad %>" type="text" class="input-xlarge" name="stock" id="stock" readonly="readonly" />
               </div>
             </div>
           
@@ -266,9 +267,9 @@
         </div>
 
 
-        <% if (producto.getDescripcion() == null || producto.getCat() == null  || producto.getPrecio() == null || 
-                (verificacion.ClienteRepetido(clientes.getRut()) || 
- !(verificacion.EditProd(producto.getDescripcion(),producto.getCat(),producto.getPrecio(),producto.getID()) { %>
+        <% if (producto.getDescripcion() == null || producto.getCat() == null  || producto.getPrecio() == 0 || 
+                (verificacion.ClienteRepetido(logueado.getRUT()) || 
+ !(verificacion.EditProd(producto.getDescripcion(),producto.getCat(),producto.getPrecio(),producto.getID())))) { %>
 
                     <p>Por favor corregir información</p>
 
@@ -282,7 +283,7 @@
 
                         <p class="text-small">Debes ingresar la categoría del producto</p>
 
-                    <% } if(producto.getPrecio() == null) { %>
+                    <% } if(producto.getPrecio() == 0) { %>
 
                       <p class="text-small">Debes ingresar el precio del producto</p>
 
@@ -291,8 +292,6 @@
                 <% } else { %>
                 <p>El producto fue modificado exitosamente.</p>
               <% } %> //cierre else
-               <% } %> //cierre if verificaciones
-           <% } %>
 
     </div> <!-- /formulario editar productos -->
 
@@ -309,7 +308,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido Administrador</span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

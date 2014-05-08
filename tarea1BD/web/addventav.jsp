@@ -18,13 +18,15 @@
   </head>
 
   <body class="profile">
-	<%@page import="holi.verificaciones"%>
+    <%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="page" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="productos" scope="page" class="holi.producto" />
     <jsp:setProperty name="productos" property="*" />
     <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
+    
+    
 	<%
             usuario user = new usuario();
             new verificaciones().cargarUsuario(user,logueado.getUsername());
@@ -48,92 +50,6 @@
   
         <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
         <button type="submit" class="btn">Finalizar</button>
-
-        <% if (logueado.getLoginEnv()==1) { %> <!-- Si fue presionado el botón Finalizar...-->
-        <%      
-                 String nombreVendedor=verificacion.NombreVendedorporUsername(user.getUsername());
-                 String rutVendedor=verificacion.RUTVendedorPorUsername(user.getUsername());
-                 String rutCliente=verificacion.RUTClientePorNombre(nombreElegido); 
-        %>
-           <% if(verificacion.IngresarVenta(idventa,verificacion.IDClientePorNombre(nombreElegido),IDVendedorporNombredeUsuario(user.getUsername()),costoProducto); && verificacion.CountProductos() && verificacion.CountClientes()) { %> <!-- Si la venta se agregó exitosamente...-->
-           <article class="after-form">
-             <div class="container">
-             <p> La venta fue agregada exitosamente al sistema </p>
-          </div>
-        </article>
-
-        <h3><strong>Información de la venta realizada</strong><h3>
-      <h3><strong>Código Venta: #<%= idventa %></strong><h3>
-            <h3><strong>Fecha/Hora Venta: </strong> <%= fechahoraventa %><h3>
-            <h3><strong>Nombre Vendedor: </strong> <%= nombreVendedor %><h3>
-            <h3><strong>RUT Vendedor: </strong> <%= rutVendedor %><h3>
-            <h3><strong>Nombre Cliente: </strong> <%= nombreElegido %><h3>
-            <h3><strong>RUT Cliente: </strong> <%= rutCliente %><h3>
-
-
-
-           <table id="tabla1">
-          <tr>
-            <td><h3><strong>ID</strong></h3></td>
-            <td><h3><strong>Nombre Producto</strong></h3></td>
-            <td><h3><strong>Cantidad</strong></h3></td>
-            <td><h3><strong>Precio</strong></h3></td>
-          </tr>
- 
-          <tr>
-            <% for (int i = 0; i < id.length; i++) { %>
-                      <td><h3><%= id[i] %></h3></td>
-                    <% } %>
-         </tr>
-
-          <tr>
-          <% for (int i = 0; i < id.length; i++) { %>
-                      <td><h3><%= verificacion.NombreProdporID(id[i]) %></h3></td>
-                    <% } %>
-         </tr>
- 
-         <tr>
-                      <% for (int i = 0; i < id.length; i++) { %>
-                      <td><h3><%= verificacion.NombreProdporID(id[i]) %></h3></td>
-                    <% } %>
-         </tr>
- 
-         <tr>
-          <% for (int i = 0; i < id.length; i++) { %>
-                      <td><h3><%= verificacion.CostoProdporID(id[i])*verificacion.CantPorID(id[i]) %></h3></td>
-                      <% suma+=verificacion.CostoProdporID(id[i])*verificacion.CantPorID(id[i]) %>
-                    <% } %>
-         </tr>
-
-        </table>
-        
-        <table id="tabla2">
-          <tr>
-            <td><h3><strong>MONTO VENTA</strong></h3></td>
-            <td><h3><strong><%= suma %></strong></h3></td>
-          </tr>
-        </table>
-                 
-           <% } else { %>
-       
-             <p> Error! </p>
-
-             <% } if(verificacion.CountProductos()==null) {<%
-                <article class="after-form">
-                <div class="container">
-                   <p> No hay productos en el sistema! la venta  no puede realizarse </p>
-                </div>
-                </article>
-                 <%} %>
-                 <% } if(verificacion.CountClientes()==null) {<%
-                <article class="after-form">
-                <div class="container">
-                   <p> No hay clientes en el sistema! la venta  no puede realizarse </p>
-                </div>
-                </article>
-                 <%} %>
-           <%} %>
-       <%} %>
 
 	
 		<!-- Formulario para agregar productos a la venta-->
@@ -180,17 +96,17 @@
         </div>
 
         <% String nombreElegido=request.getParameter("nombre"); %>
-				<% if (productos.getID() == null || productos.getCantidad() == null || nombreElegido == null  || !(verificacion.IngresarDetalleVenta(productos.getID(),productos.getCantidad(), idventa))){ %>
+				<% if (productos.getID() == 0|| productos.getCantidad() == 0 || nombreElegido == null  || !(verificacion.IngresarDetalleVenta(productos.getID(),productos.getCantidad(), idventa))){ %>
 
 			            <p>Por favor corregir información</p>
 
 			        <!-- Si no ingresó alguno de los datos del formulario... -->
 
-			            <% if (productos.getID() == null) { %>
+			            <% if (productos.getID() == 0) { %>
 
 			            <p class="text-small">Debes ingresar el ID del producto<p>
 
-			            <% } if (productos.getCantidad() == null) { %>
+			            <% } if (productos.getCantidad() == 0) { %>
 
 			                <p class="text-small">Debes ingresar la cantidad requerida del producto.</p>
 
@@ -207,6 +123,83 @@
           <button type="submit" class="btn btn-primary">Agregar</button>
         </div>
     </div> <!-- /formulario agregar productos -->
+    
+       <% if (logueado.getLoginEnv()==1) { %> <!-- Si fue presionado el botón Finalizar...-->
+        <%      
+                 String nombreVendedor=verificacion.NombreVendedorporUsername(user.getUsername());
+                 String rutVendedor=verificacion.RUTVendedorPorUsername(user.getUsername());
+                 String rutCliente=verificacion.RUTClientePorNombre(nombreElegido); 
+                 for (int i = 0; i < id.length; i++) { 
+                      suma+=verificacion.CostoProdporID(id[i])*verificacion.CantPorID(id[i]);
+                   } 
+         %>
+         
+           <%  if(verificacion.IngresarVenta(idventa,(verificacion.IDClientePorNombre(nombreElegido)),(verificacion.IDVendedorporNombredeUsuario(user.getUsername())),suma) && (verificacion.CountProductos() && (verificacion.CountClientes()))) {%> <!-- Si la venta se agregó exitosamente...-->
+           <article class="after-form">
+             <div class="container">
+             <p> La venta fue agregada exitosamente al sistema </p>
+          </div>
+        </article>
+
+        <h3><strong>Información de la venta realizada</strong><h3>
+      <h3><strong>Código Venta: #<%= idventa %></strong><h3>
+            <h3><strong>Fecha/Hora Venta: </strong> <%= fechahoraventa %><h3>
+            <h3><strong>Nombre Vendedor: </strong> <%= verificacion.NombreVendedorporUsername(user.getUsername()) %><h3>
+            <h3><strong>RUT Vendedor: </strong> <%= verificacion.RUTVendedorPorUsername(user.getUsername()) %><h3>
+            <h3><strong>Nombre Cliente: </strong> <%= nombreElegido %><h3>
+            <h3><strong>RUT Cliente: </strong> <%= verificacion.RUTClientePorNombre(nombreElegido) %><h3>
+ 
+
+
+           <table id="tabla1">
+          <tr>
+            <td><h3><strong>ID</strong></h3></td>
+            <td><h3><strong>Nombre Producto</strong></h3></td>
+            <td><h3><strong>Cantidad</strong></h3></td>
+            <td><h3><strong>Precio</strong></h3></td>
+          </tr>
+ 
+          <tr>
+            <% for (int i = 0; i < id.length; i++) { %>
+                      <td><h3><%= id[i] %></h3></td>
+                    <% } %>
+         </tr>
+
+          <tr>
+          <% for (int i = 0; i < id.length; i++) { %>
+                      <td><h3><%= verificacion.NombreProdporID(id[i]) %></h3></td>
+                    <% } %>
+         </tr>
+ 
+         <tr>
+                      <% for (int i = 0; i < id.length; i++) { %>
+                      <td><h3><%= verificacion.NombreProdporID(id[i]) %></h3></td>
+                    <% } %>
+         </tr>
+ 
+         <tr>
+          <% for (int i = 0; i < id.length; i++) { %>
+                      <td><h3><%= verificacion.CostoProdporID(id[i])*verificacion.CantPorID(id[i]) %></h3></td>
+                      <%= suma+=verificacion.CostoProdporID(id[i])*verificacion.CantPorID(id[i]) %>
+                    <% } %>
+         </tr>
+
+        </table>
+        
+        <table id="tabla2">
+          <tr>
+            <td><h3><strong>MONTO VENTA</strong></h3></td>
+            <td><h3><strong><%= suma %></strong></h3></td>
+          </tr>
+        </table>
+                 
+           <%} else {%>
+       
+             <p> Error! </p>
+
+           <%} %>
+      <%} %>
+
 
 		
 <!-- Barra de navegación -->
@@ -221,7 +214,7 @@
         <!-- Dropdown Menú -->
         <ul class="nav pull-left">
           <li>
-            <span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
+            <span class="brand" class="user-name" href="#">Bienvenido Vendedor</span>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

@@ -19,15 +19,15 @@
   <body class="profile">
 	<%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="page" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
 
 	<%
-            usuario user = new usuario();
+            usuario user= new usuario();
             new verificaciones().cargarUsuario(user,logueado.getUsername());
             int idvendedor=verificacion.IDVendedorporUsername(user.getUsername());
-            String [] id=verificacion.IDProddeVenta(idvendedor);
+            int id [] = verificacion.IDProddeVenta(idvendedor);
     %>
 
    <article class="container">
@@ -65,8 +65,6 @@
         <p> No hay ventas realizadas por el vendedor.</p>
         <% } %>
 
-
-	<% } %>
 
 	<!-- Barra de navegación -->
     <div class="navbar navbar-fixed-top">

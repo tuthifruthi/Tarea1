@@ -20,7 +20,7 @@
   <body class="profile">
 	<%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="page" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="compras" scope="page" class="holi.detallecompra" />
     <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
@@ -101,7 +101,7 @@
         
         <table id="tabla2">
           <% for (int i = 0; i < precio.length; i++) { %>
-                  <% suma+=precio[i] %>
+                  <%= suma+=precio[i] %>
             <% } %>
           <tr>
             <td><h3><strong>MONTO TOTAL</strong></h3></td>
@@ -113,13 +113,6 @@
        
              <p> Error! </p>
 
-             <% } if(verificacion.CountProductos()==null) {<%
-                <article class="after-form">
-                <div class="container">
-                   <p> No hay productos en el sistema! la compra  no puede realizarse </p>
-                </div>
-                </article>
-                 <%} %>
            <%} %>
        <%} %>
 
@@ -163,21 +156,21 @@
             </div>
           </fieldset>       
         </div>
-				<% if (compras.getIDProducto() == null || compras.getCantidad() == null || compras.getPrecio() == null  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio(),idcompra) || !(verificacion.IDProdExiste(compras.getIDProducto()))){ %>
+				<% if ((compras.getIDProducto()) == 0 || (compras.getCantidad()) == 0 || (compras.getPrecio()) == 0  || !(verificacion.IngresarDetalleCompra(compras.getIDProducto(),compras.getCantidad(),compras.getPrecio(),idcompra) || !(verificacion.IDProdExiste(compras.getIDProducto())))){ %>
 
 			            <p>Por favor corregir información</p>
 
 			        <!-- Si no ingresó alguno de los datos del formulario... -->
 
-			            <% if (compras.getIDProducto() == null) { %>
+			            <% if (compras.getIDProducto() == 0) { %>
 
 			            <p class="text-small">Debes ingresar el ID del producto<p>
 
-			            <% } if (compras.getCantidad() == null) { %>
+			            <% } if (compras.getCantidad() == 0) { %>
 
 			                <p class="text-small">Debes ingresar la cantidad requerida del producto.</p>
 
-			            <% } if(compras.getPrecio() == null) { %>
+			            <% } if(compras.getPrecio() == 0) { %>
 
 			                <p class="text-small">Debes ingresar el costo del producto. </p>
 
@@ -190,11 +183,8 @@
 			        <% } else { %>
 							<p>La compra fue agregada exitosamente.</p>
 				    <% } %>
-				<% } %>
-			    <% } %>
 			    <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Agregar</button>
-          //poner algo aca para refrescar la pagina addcompra.jsp cada vez que se agregue un nuevo producto
         </div>
     </div> <!-- /formulario agregar productos -->
 
@@ -211,7 +201,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido Administrador</span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

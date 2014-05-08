@@ -57,7 +57,7 @@ public class verificaciones {
    public boolean RutExiste(String rutuser) throws Exception
    {
        	String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -78,7 +78,7 @@ public class verificaciones {
    public boolean IDProdExiste(int idprod) throws Exception
    {
        	String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -100,7 +100,7 @@ public class verificaciones {
     public boolean NickUsado(String nombreuser) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -118,10 +118,10 @@ public class verificaciones {
             return true;
     }
 
-    public boolean EditProd(String descr, String cat, int precio, int idprod)
+    public boolean EditProd(String descr, String cat, int precio, int idprod) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -145,7 +145,7 @@ public class verificaciones {
     public boolean ClienteRepetido(String rutuser) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -164,10 +164,10 @@ public class verificaciones {
     }
     
     //FUNCIONES DE CARGA DE COSAS
-    /* public boolean CargarUser(String usuario, String passw) throws Exception
+   public boolean CargarUser(String usuario, String passw) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -180,31 +180,11 @@ public class verificaciones {
                 return true;
          return false;
     }
-    
-    public int CargarID(String nombreuser) throws Exception
-    {
-        int iduser=0;
-        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
-        String password="mariaj";
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection c;
-        c=DriverManager.getConnection(db,username,password); //conexion a bd
-        
-        Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT id_usuario FROM TUTHIFRUTHI.USUARIO INTO iduser WHERE nombre_usuario='"+nombreuser+"'");
-        
-        if(set.next())
-                {
-                   return set.getInt(iduser); 
-                }
-         return 0;
-    } */
             
-    public void CargarUsuario(usuario user, String nombreuser) throws Exception
+    public void cargarUsuario(usuario user, String nombreuser) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -226,7 +206,7 @@ public class verificaciones {
     public boolean UserEsAdmin(String usuario) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -238,9 +218,13 @@ public class verificaciones {
         while(set.next())
         {
             if(set.getString("tipo").equals("Administrador"))
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         return false;
     }
@@ -248,7 +232,7 @@ public class verificaciones {
     public boolean UserEsVendedor(String usuario) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -267,101 +251,12 @@ public class verificaciones {
         return false;
     }
     
-    /* public void CargarProductos(producto prod) throws Exception
-    {
-        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
-        String password="mariaj";
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection c;
-        c=DriverManager.getConnection(db,username,password); //conexion a bd
-        
-        Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT id_producto,nombrep,stock,descripcion,categoria,precio FROM TUTHIFRUTHI.PRODUCTO");
-        
-        if(set.next())
-        {
-            prod.setID(set.getInt("id_producto"));
-            prod.setNombreProd(set.getString("nombre"));
-            prod.setStock(set.getInt("stock"));
-            prod.setDescripcion(set.getString("descripcion"));
-            prod.setCat(set.getString("categoria"));
-            prod.setPrecio(set.getInt("precio"));
-        }
-    }
-    
-    public void CargarClientes(cliente customer) throws Exception
-    {
-        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
-        String password="mariaj";
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection c;
-        c=DriverManager.getConnection(db,username,password); //conexion a bd
-        
-        Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT rut, id_usuario, nombre FROM TUTHIFRUTHI.CLIENTE ORDER BY nombre");
-        
-        if(set.next())
-        {
-            customer.setRut(set.getString("rut"));
-            customer.setID(set.getInt("id_cliente"));
-            customer.setNombre(set.getString("nombre"));
-        }
-    }
-    
-    public void CargarCompras(compra comprap, int idcompra) throws Exception
-    {
-        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
-        String password="mariaj";
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection c;
-        c=DriverManager.getConnection(db,username,password); //conexion a bd
-        
-        Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT fecha, id_compra, monto_total, hora FROM TUTHIFRUTHI.COMPRA WHERE id_compra='"+idcompra+"'");
-
-
-        
-        if(set.next())
-        {
-            comprap.setFecha(set.getString("fecha"));
-            comprap.setID(set.getInt("id_compra"));
-            comprap.setMonto(set.getInt("monto_total"));
-            comprap.setHora(set.getString("hora"));
-        }
-    }
-    
-    public void CargarVentas(venta ventas, int idventa) throws Exception
-    {
-         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
-        String password="mariaj";
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection c;
-        c=DriverManager.getConnection(db,username,password); //conexion a bd
-        
-        Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT id_venta, id_usuario, id_cliente, fecha, monto_total, hora FROM TUTHIFRUTHI.VENTA WHERE id_venta='"+idventa+"'");
-        
-        if(set.next())
-        {
-            ventas.setIDV(set.getInt("id_venta"));
-            ventas.setIDU(set.getInt("id_usuario"));
-            ventas.setIDC(set.getInt("id_compra"));
-            ventas.setMonto(set.getInt("monto_total"));
-            ventas.setHora(set.getString("hora"));
-            ventas.setFecha(set.getString("fecha"));
-        }
-    } */
-    
     //FUNCIONES DE INGRESO DE COSAS
 
     public boolean IDCompra() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -386,7 +281,7 @@ public class verificaciones {
     public boolean IDVenta() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -411,7 +306,7 @@ public class verificaciones {
     public boolean IngresarDetalleCompra(int idprod, int cant, int costo, int idcompra) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -419,7 +314,7 @@ public class verificaciones {
         
         String query;
         String query2;
-        query="INSERT INTO TUTHIFRUTHI.DETALLECOMPRA (id_producto,cantidad,precio,id_compra) VALUES ('"+idprod+"','"+cant+"','"+precio+"','"+idcompra+"')";
+        query="INSERT INTO TUTHIFRUTHI.DETALLECOMPRA (id_producto,cantidad,precio,id_compra) VALUES ('"+idprod+"','"+cant+"','"+costo+"','"+idcompra+"')";
    
         try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
@@ -436,7 +331,7 @@ public class verificaciones {
     public boolean IngresarDetalleVenta(int idprod, int cant, int idventa) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -458,11 +353,11 @@ public class verificaciones {
         return true;
     }
 
-    public boolean IngresarCompra(int montototal, int idcompra)
+    public boolean IngresarCompra(int montototal, int idcompra) throws Exception
     {
 	
-		String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -482,17 +377,17 @@ public class verificaciones {
         return true;
     }
     
-    public void IngresarVendedor(String rutuser, String pass, String nombreuser, String username) throws Exception
+    public boolean IngresarVendedor(String rutuser, String pass, String nombreuser, String user) throws Exception
     {   
-		String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+	String db="jdbc:oracle:thin:@localhost:1521:XE";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         String query;
-        query="INSERT INTO TUTHIFRUTHI.USUARIO (rut, contrasena, nombre, nombre_usuario, tipo, comision) VALUES ('"+rutuser+"','"+pass+"','"+nombreuser+"', '"+username+"','Vendedor','0')";
+        query="INSERT INTO TUTHIFRUTHI.USUARIO (rut, contrasena, nombre, nombre_usuario, tipo, comision) VALUES ('"+rutuser+"','"+pass+"','"+nombreuser+"', '"+user+"','Vendedor','0')";
         
         try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
@@ -509,7 +404,7 @@ public class verificaciones {
     public boolean IngresarVenta(int idventa, int idcliente, int idusuario, int monto) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -529,17 +424,17 @@ public class verificaciones {
         return true;
     }
     
-    public boolean IngresarCliente(String rutC, int idcliente, String nombreC) throws Exception
+    public boolean IngresarCliente(String rutC, String nombreC) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         String query;
-        query="INSERT INTO TUTHIFRUTHI.CLIENTE (rut,nombre,id_cliente) VALUES ('"+rutC+"','"+nombreC+"','"+idcliente+"')";
+        query="INSERT INTO TUTHIFRUTHI.CLIENTE (rut,nombre) VALUES ('"+rutC+"','"+nombreC+"')";
         
         try{
             Statement holi=c.createStatement(); //para ejecutar la consulta
@@ -556,7 +451,7 @@ public class verificaciones {
     public boolean AgregarProd(int idprod, int cant, int costo, String cat, String descr, String nombreprod) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -582,7 +477,7 @@ public class verificaciones {
     public int BuscarProdPorID(int id) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -601,7 +496,7 @@ public class verificaciones {
     public int ObtenerIDCompra() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -620,7 +515,7 @@ public class verificaciones {
     public int ObtenerIDVenta() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -640,7 +535,7 @@ public class verificaciones {
     public int IDInsertadoDetalleCompra(int idcompra) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -659,7 +554,7 @@ public class verificaciones {
     public int IDInsertadoDetalleVenta(int idventa) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -678,7 +573,7 @@ public class verificaciones {
     public int PrecioInsertadoDetalleCompra(int idcompra) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -697,7 +592,7 @@ public class verificaciones {
     public int CantidadInsertadoDetalleCompra(int idcompra) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -716,7 +611,7 @@ public class verificaciones {
     public int CantidadInsertadoDetalleVenta(int idventa) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -735,7 +630,7 @@ public class verificaciones {
     public String BuscarProdPorNombr(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -756,7 +651,7 @@ public class verificaciones {
     public int IDProd() throws Exception
     {
        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -775,7 +670,7 @@ public class verificaciones {
     public String FechaHoraCompra(int idcompra) throws Exception
     {
        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -794,14 +689,14 @@ public class verificaciones {
     public String FechaHoraVenta(int idventa) throws Exception
     {
        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT fechahora FROM TUTHIFRUTHI.VENTA WHERE id_compra='"+idcompra+"'");
+        ResultSet set=holi.executeQuery("SELECT fechahora FROM TUTHIFRUTHI.VENTA WHERE id_venta='"+idventa+"'");
 
         while(set.next())
         {
@@ -810,30 +705,11 @@ public class verificaciones {
         return "";
     }
 
-
-    public String FechaHoraVenta(int idcompra) throws Exception
-    {
-       String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
-        String password="mariaj";
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection c;
-        c=DriverManager.getConnection(db,username,password); //conexion a bd
-        
-        Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT fechahora FROM TUTHIFRUTHI.VENTA WHERE id_compra='"+idcompra+"'");
-
-        while(set.next())
-        {
-            return set.getString("fechahora");
-        }
-        return "";
-    }
 
     public String NombreProd() throws Exception
     {      
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -850,17 +726,17 @@ public class verificaciones {
         
     }
 
-    public String NombreVendedorporUsername(String username) throws Exception
+    public String NombreVendedorporUsername(String user) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT nombre FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+username+"'");
+        ResultSet set=holi.executeQuery("SELECT nombre FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+user+"'");
 
         while(set.next())
         {
@@ -869,17 +745,17 @@ public class verificaciones {
         return "";
     }
 
-    public String RUTVendedorPorUsername(String username) throws Exception
+    public String RUTVendedorPorUsername(String user) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT rut FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+username+"'");
+        ResultSet set=holi.executeQuery("SELECT rut FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+user+"'");
 
         while(set.next())
         {
@@ -891,7 +767,7 @@ public class verificaciones {
     public String RUTClientePorNombre(String nombre) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -910,7 +786,7 @@ public class verificaciones {
     public int IDClientePorNombre(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -929,7 +805,7 @@ public class verificaciones {
     public int IDProdporNombre(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -946,17 +822,17 @@ public class verificaciones {
     }
 
 
-    public int IDVendedorporUsername (String username) throws Exception
+    public int IDVendedorporUsername (String user) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT id_usuario FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+nombr+"'");
+        ResultSet set=holi.executeQuery("SELECT id_usuario FROM TUTHIFRUTHI.USUARIO WHERE nombre_usuario='"+user+"'");
         
         while(set.next())
         {
@@ -968,7 +844,7 @@ public class verificaciones {
     public int IDVendedorporNombredeUsuario(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -987,7 +863,7 @@ public class verificaciones {
     public int IDProddeVenta(int idvendedor) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1006,7 +882,7 @@ public class verificaciones {
     public String NombreProdporID(int idprod) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1025,14 +901,14 @@ public class verificaciones {
     public int CantPorID(int id) throws Exception
     {
        String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
         c=DriverManager.getConnection(db,username,password); //conexion a bd
         
         Statement holi=c.createStatement();
-        ResultSet set=holi.executeQuery("SELECT cantidad FROM TUTHIFRUTHI.DETALLEVENTA WHERE id_producto='"+idprod+"'");
+        ResultSet set=holi.executeQuery("SELECT cantidad FROM TUTHIFRUTHI.DETALLEVENTA WHERE id_producto='"+id+"'");
         
         while(set.next())
         {
@@ -1063,7 +939,7 @@ public class verificaciones {
     public int CostoProdporID(int id) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1082,7 +958,7 @@ public class verificaciones {
     public int CantProdporNombre(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1101,7 +977,7 @@ public class verificaciones {
     public String DescripcionProdporNombre(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1120,7 +996,7 @@ public class verificaciones {
     public String CatProdporNombre(String nombr) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1139,7 +1015,7 @@ public class verificaciones {
     public String NombreClientes() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1158,7 +1034,7 @@ public class verificaciones {
     public int IDProddeVentaCliente(int idcliente) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1177,7 +1053,7 @@ public class verificaciones {
     public int IDClienteporNombre(String nombrec) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1196,7 +1072,7 @@ public class verificaciones {
     public int StockProd() throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1216,7 +1092,7 @@ public class verificaciones {
   public boolean CountProductos() throws Exception 
   {
     String db="jdbc:oracle:thin:@localhost:1521:XE";
-    String username="TUTHIFRUTHI";
+    String username="SYSTEM";
     String password="mariaj";
     Class.forName("oracle.jdbc.driver.OracleDriver");
     Connection c;
@@ -1237,7 +1113,7 @@ public class verificaciones {
   public boolean CountVendedores() throws Exception 
   {
     String db="jdbc:oracle:thin:@localhost:1521:XE";
-    String username="TUTHIFRUTHI";
+    String username="SYSTEM";
     String password="mariaj";
     Class.forName("oracle.jdbc.driver.OracleDriver");
     Connection c;
@@ -1259,7 +1135,7 @@ public class verificaciones {
 public boolean CountVentas() throws Exception 
   {
     String db="jdbc:oracle:thin:@localhost:1521:XE";
-    String username="TUTHIFRUTHI";
+    String username="SYSTEM";
     String password="mariaj";
     Class.forName("oracle.jdbc.driver.OracleDriver");
     Connection c;
@@ -1280,7 +1156,7 @@ public boolean CountVentas() throws Exception
 public boolean CountClientes() throws Exception 
   {
     String db="jdbc:oracle:thin:@localhost:1521:XE";
-    String username="TUTHIFRUTHI";
+    String username="SYSTEM";
     String password="mariaj";
     Class.forName("oracle.jdbc.driver.OracleDriver");
     Connection c;
@@ -1301,7 +1177,7 @@ public boolean CountClientes() throws Exception
     public boolean CountVentasporVendedor(int id) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;
@@ -1322,7 +1198,7 @@ public boolean CountClientes() throws Exception
      public boolean CountVentasaCliente(int id) throws Exception
     {
         String db="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="TUTHIFRUTHI";
+        String username="SYSTEM";
         String password="mariaj";
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection c;

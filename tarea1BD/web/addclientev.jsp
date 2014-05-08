@@ -16,13 +16,16 @@
     <![endif]-->
   </head>
 
-  <body class="profile">
+   <body class="profile">
 	<%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="page" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="clientes" scope="page" class="holi.cliente" />
-    <jsp:setProperty name="clientes" property="*" />
+     <jsp:setProperty name="clientes" property="*" />
+
+    <!-- VALIDAR DATOS INGRESADOS -->
+    <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
 
 	<%
             usuario user = new usuario();
@@ -72,19 +75,19 @@
 		       <article class="after-form">
 		           <div class="container">
 
-					 <% if (logueado.getNombre() == null || logueado.getRut() == null  || !(logueado.getPassword().equals(logueado.getRpassword())) || 
+					 <% if (clientes.getNombre() == null || clientes.getRut() == null || 
 				        (verificacion.ClienteRepetido(clientes.getRut()) || 
- !(verificacion.IngresarCliente(clientes.getRut(),clientes.getNombre()) { %>
+ !(verificacion.IngresarCliente(clientes.getRut(),clientes.getNombre())))) { %>
 
 				            <p>Por favor corregir información</p>
 
 				        <!-- Si no ingresó alguno de los datos del formulario... -->
 
-				            <% if (logueado.getNombre() == null) { %>
+				            <% if (clientes.getNombre() == null) { %>
 
 				            <p class="text-small">Debes ingresar el nombre del cliente<p>
 
-				            <% } if(logueado.getRut() == null) { %>
+				            <% } if(clientes.getRut() == null) { %>
 
 				                <p class="text-small">Debes ingresar el RUT del cliente</p>
 
@@ -123,7 +126,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido Vendedor</span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

@@ -19,10 +19,12 @@
   <body class="profile">
 	<%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="page" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="vendedor" scope="page" class="holi.usuario" />
     <jsp:setProperty name="vendedor" property="*" />
+        <!-- VALIDAR DATOS INGRESADOS -->
+    <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
 
 	<%
             usuario user = new usuario();
@@ -99,8 +101,8 @@
 	       <article class="after-form">
 	           <div class="container">
 
-				 <% if (logueado.getNombre() == null || logueado.getPassword() == null || logueado.getRpassword() == null  || logueado.getRut() == null  || !(logueado.getPassword().equals(logueado.getRpassword())) || 
-			        !(verificacion.IngresarVendedor(vendedor.getRut(),vendedor.getPassword(),vendedor.getNombre(),vendedor.getUsername())) || !(verificacion.ValidarRut(vendedor.getRut())) || (verificacion.NickUsado(vendedor.getUsername())){ %>
+				 <% if (logueado.getNombre() == null || logueado.getPassword() == null || logueado.getRPassword() == null  || logueado.getRUT() == null  || !(logueado.getPassword().equals(logueado.getRPassword())) || 
+			        !(verificacion.IngresarVendedor(logueado.getRUT(),logueado.getRPassword(),logueado.getNombre(),logueado.getUsername())) || !(verificacion.ValidarRut(logueado.getRUT())) || (verificacion.NickUsado(logueado.getUsername()))){ %>
 
 			            <p>Por favor corregir información</p>
 
@@ -114,14 +116,14 @@
 
 			                <p class="text-small">Debes ingresar una contraseña</p>
 
-			            <% } else if (logueado.getRpassword() == null) { %>
+			            <% } else if (logueado.getRPassword() == null) { %>
 			                <p class="text-small">Debes confirmar la contraseña</p>
 
-			            <% } else if (!logueado.getPassword().equals(logueado.getRpassword())) { %>
+			            <% } else if (!logueado.getPassword().equals(logueado.getRPassword())) { %>
 
 			                <p class="text-small">Las contraseñas ingresadas no coinciden</p>
 
-			            <% } if(logueado.getRut() == null) { %>
+			            <% } if(logueado.getRUT() == null) { %>
 
 			                <p class="text-small">Debes ingresar el RUT del vendedor</p>
 			
@@ -151,7 +153,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido Administrador</span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>

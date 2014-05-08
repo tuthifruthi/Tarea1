@@ -19,7 +19,7 @@
   <body class="profile">
 	<%@page import="holi.verificaciones"%>
     <%@page import="holi.usuario"%>
-    <jsp:useBean id="logueado" scope="application" class="holi.Login" />
+    <jsp:useBean id="login" scope="page" class="holi.Login" />
     <jsp:useBean id="logueado" scope="application" class="holi.Login" />
     <jsp:useBean id="verificacion" scope="page" class="holi.verificaciones" />
 	<%
@@ -79,9 +79,6 @@
         <%} else {%>
         <p> No hay ventas realizadas al cliente.</p>
         <% } %>
-
-
-	<% } %>
 	
 
 	<!-- Barra de navegación -->
@@ -96,7 +93,7 @@
 				<!-- Dropdown Menú -->
 				<ul class="nav pull-left">
 					<li>
-						<span class="brand" class="user-name" href="#">Bienvenido <%= user.getUsername() %></span>
+						<span class="brand" class="user-name" href="#">Bienvenido Vendedor</span>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>
