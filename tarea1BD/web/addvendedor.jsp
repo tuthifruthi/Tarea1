@@ -157,12 +157,12 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">Administrador</li>
-							<li><a href="addvendedor.html"><b>Ingresar vendedor</b></a></li>
-							<li><a href="addcliente.html">Ingresar cliente</a></li>
-							<li><a href="adminprod.html">Administrar productos</b></a></li>
-							<li><a href="addcompra.html">Ingresar compra</a></li>
-							<li><a href="addventa.html">Ingresar venta</a></li>
-							<li><a href="showsales.html">Ver ventas a cliente</a></li>
+							<li><a href="addvendedor.jsp"><b>Ingresar vendedor</b></a></li>
+							<li><a href="addcliente.jsp">Ingresar cliente</a></li>
+							<li><a href="adminprod.jsp">Administrar productos</b></a></li>
+							<li><a href="addcompra.jsp">Ingresar compra</a></li>
+							<li><a href="addventa.jsp">Ingresar venta</a></li>
+							<li><a href="showsales.jsp">Ver ventas a cliente</a></li>
 							<li class="divider"></li>
 							<li><a href="#">Salir</a></li>
 						</ul>

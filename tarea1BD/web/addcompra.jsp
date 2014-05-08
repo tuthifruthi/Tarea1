@@ -45,10 +45,22 @@
 			<h1>Ingresar Compra</h1>
 	  </header>
 
-    <h3><strong>Código Compra: #<%= idcompra %></strong><h3>
-    <h3><strong>Fecha/Hora Compra: </strong> <%= fechahoracompra %><h3>
 	  <a data-toggle="modal" href="#add-prod"><p><img src="img/arrow-orange.png"> Agregar Productos</a></p>
-    
+  
+        <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
+        <button type="submit" class="btn">Finalizar</button>
+
+        <% if (logueado.getLoginEnv()==1) { %> <!-- Si fue presionado el botón Finalizar...-->
+
+           <% if(verificacion.IngresarCompra(suma, idcompra) && verificacion.CountProductos()) { %> <!-- Si la compra se agregó exitosamente...-->
+           <article class="after-form">
+             <div class="container">
+             <p> La compra fue agregada exitosamente al sistema </p>
+          </div>
+        </article>
+
+        <h3><strong>Código Compra: #<%= idcompra %></strong><h3>
+         <h3><strong>Fecha/Hora Compra: </strong> <%= fechahoracompra %><h3>
         <table id="tabla1">
           <tr>
             <td><h3><strong>ID</strong></h3></td>
@@ -96,22 +108,18 @@
             <td><h3><strong><%= suma %></strong></h3></td>
           </tr>
         </table>
-
-        <input type="hidden" name="LoginEnviado" id="LoginEnviado" value="1" />
-        <button type="submit" class="btn">Finalizar</button>
-
-        <% if (logueado.getLoginEnv()==1) { %> <!-- Si fue presionado el botón Finalizar...-->
-        <article class="after-form">
-        <div class="container">
-
-           <% if(verificacion.IngresarCompra(suma, idcompra) { %> <!-- Si la compra se agregó exitosamente...-->
-
-             <p> La compra fue agregada exitosamente al sistema </p>
                  
            <% } else { %>
        
              <p> Error! </p>
-       
+
+             <% } if(verificacion.CountProductos()==null) {<%
+                <article class="after-form">
+                <div class="container">
+                   <p> No hay productos en el sistema! la compra  no puede realizarse </p>
+                </div>
+                </article>
+                 <%} %>
            <%} %>
        <%} %>
 
@@ -209,12 +217,12 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">Administrador</li>
-							<li><a href="addvendedor.html">Ingresar vendedor</a></li>
-							<li><a href="addcliente.html">Ingresar cliente</a></li>
-							<li><a href="adminprod.html">Administrar productos</b></a></li>
-							<li><a href="addcompra.html"><b>Ingresar compra</b></a></li>
-							<li><a href="addventa.html">Ingresar venta</a></li>
-							<li><a href="showsales.html">Ver ventas a cliente</a></li>
+							<li><a href="addvendedor.jsp">Ingresar vendedor</a></li>
+							<li><a href="addcliente.jsp">Ingresar cliente</a></li>
+							<li><a href="adminprod.jsp">Administrar productos</b></a></li>
+							<li><a href="addcompra.jsp"><b>Ingresar compra</b></a></li>
+							<li><a href="addventa.jsp">Ingresar venta</a></li>
+							<li><a href="showsales.jsp">Ver ventas a cliente</a></li>
 							<li class="divider"></li>
 							<li><a href="#">Salir</a></li>
 						</ul>

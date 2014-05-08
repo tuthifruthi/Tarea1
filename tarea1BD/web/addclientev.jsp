@@ -129,10 +129,10 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú de usuario<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="nav-header">Vendedor</li>
-							<li><a href="addclientev.html"><b>Ingresar cliente</b></a></li>
-							<li><a href="addventav.html">Ingresar venta</a></li>
-							<li><a href="showsalesv.html">Ver ventas a cliente</a></li>
-							<li><a href="mysales.html">Mis ventas</a></li>
+							<li><a href="addclientev.jsp"><b>Ingresar cliente</b></a></li>
+							<li><a href="addventav.jsp">Ingresar venta</a></li>
+							<li><a href="showsalesv.jsp">Ver ventas a cliente</a></li>
+							<li><a href="mysales.jsp">Mis ventas</a></li>
 							<li class="divider"></li>
 							<li><a href="#">Salir</a></li>
 						</ul>
