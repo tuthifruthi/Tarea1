@@ -158,22 +158,20 @@ CREATE TRIGGER Cliente_repetido
 END;
 
 CREATE TRIGGER trigger_Compras 
-    BEFORE INSERT ON Producto FOR EACH ROW 
+    BEFORE INSERT ON DetalleCompra FOR EACH ROW 
     DECLARE
         stockproducto NUMBER
         stocknuevo NUMBER
-        coincidencias NUMBER
     BEGIN
 
-        SELECT stock FROM Producto INTO stockproducto WHERE Producto.id_producto=:new.id_producto
-        stocknuevo:=new.cantidad+stockproducto 
-        UPDATE Producto SET stock=stocknuevo WHERE Producto.id_producto=:new.id_producto 
-        SELECT secuencia.nextval INTO new.id_producto FROM Dual
+        SELECT stockproducto=stock FROM Producto WHERE Producto.id_producto=:NEW.id_producto
+        stocknuevo=:NEW.cantidad+stockproducto 
+        UPDATE Producto SET stock=stocknuevo WHERE Producto.id_producto=:NEW.id_producto 
 
     END
 
 CREATE TRIGGER trigger_Ventas 
-    BEFORE INSERT ON Venta FOR EACH ROW 
+    BEFORE INSERT ON DetalleVenta FOR EACH ROW 
     DECLARE
          stockproducto NUMBER
          stocknuevo NUMBER
@@ -186,7 +184,7 @@ CREATE TRIGGER trigger_Ventas
         SELECT COUNT (*) INTO cantidad1 FROM Producto
         SELECT COUNT (*) INTO cantidad2 FROM Usuario WHERE Usuario.tipo='Vendedor'
         SELECT COUNT (*) INTO cantidad3 FROM Cliente
-        SELECT stock FROM Producto INTO stockproducto WHERE Producto.id_producto=:new.id_producto 
+        SELECT stockproducto=stock FROM Producto WHERE Producto.id_producto=:NEW.id_producto 
         
        CASE
         WHEN cantidad1 >=1 THEN  
@@ -195,10 +193,9 @@ CREATE TRIGGER trigger_Ventas
            CASE
              WHEN cantidad3 >=1 THEN 
               CASE
-               WHEN new.cantidad =< stockproducto THEN  
-                  stocknuevo:=stockproducto-new.cantidad 
-                  UPDATE Producto SET stock=stocknuevo WHERE Producto.id_producto=:new.id_producto 
-                  SELECT secuencia.nextval INTO new.id_venta FROM Dual
+               WHEN :NEW.cantidad =< stockproducto THEN  
+                  stocknuevo:=stockproducto-:NEW.cantidad 
+                  UPDATE Producto SET stock=stocknuevo WHERE Producto.id_producto=:NEW.id_producto 
                ELSE
                raise_application_error(-20001, 'La cantidad requerida es mayor al stock del producto. La venta no puede realizarse')
                END CASE
